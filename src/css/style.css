@@ -1,0 +1,91 @@
+
+/* set default text */
+body {
+  font-family: "Overpass Mono", monospace;
+  font-size: 15px;
+  padding: 0;
+}
+
+#global-top-nav{
+  padding: 15px;
+}
+/* Styles for the navbar */
+#global-search-button {
+  color: black;
+  background-color: transparent;
+  border-color: grey;
+  border-radius: 0;
+  font-size: 15px;
+}
+#global-search-button:hover {
+  color: black;
+  border-color: black;
+}
+
+#global-login-button{
+    color: black;
+    background-color: transparent;
+    border-color: grey;
+    border-radius: 0;
+    font-size: 15px;
+    padding: 5px;
+}
+#global-login-button:hover{
+    color: blue;
+    background-color: transparent;
+    border-color: black;
+} 
+#global-signup-button{
+    color: white;
+    background-color: black;
+    border-color: black;
+    border-radius: 0;
+    font-size: 15px;
+    padding: 5px;
+}
+#global-signup-button:hover{
+    color: blue;
+    background-color: rgb(61, 61, 61);
+}
+
+#global-sell-button{
+    padding: 5px;
+    color: black;
+    background-color: transparent;
+    border-color: grey;
+    border-radius: 0;
+    font-size: 15px;
+}
+#global-sell-button:hover{
+    color: blue;
+    background-color: transparent;
+    border-color: black;
+}
+
+.me-2{
+    border-radius: 0;
+    border-color: black;
+}
+
+.nav-link{
+  color: black;
+}
+.nav-link:hover{
+  color:blue;
+}
+#navbar-div li{
+  padding: 0 15px;
+}
+#global-lower-nav{
+  border-top: 1px solid grey;
+}
+
+/* Landing page styles */
+
+#global-landing-div{
+  padding: 0;
+}
+#global-lower-nav-list li{
+  padding: 0 15px;
+}
+

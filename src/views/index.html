@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" id="global-top-nav">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="./index.html">SoundSwap</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="d-flex w-50">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" id="global-search-button" type="submit">SEARCH</button>
+                </form>
+                <div class="d-flex w-50" id="navbar-div">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index.html">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary" id="global-sell-button" aria-pressed="false">SELL</button>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SHOP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">LEGAL</a>
+                        </li>
+                        <div class = "btn-group">
+                            <button class="btn btn-outline-primary" id="global-login-button" aria-pressed="false">LOGIN</button>
+                            <button class="btn btn-outline-primary" id="global-signup-button" aria-pressed="false">SIGN UP</button>
+                        </div>
+                    </ul>
+                    </div>
+              </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" id="global-lower-nav">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0" id="global-lower-nav-list">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">GUITARS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">DRUMS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">PEDALS AND AMPLIFIERS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">KEYBOARDS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">RECORDING</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">DJ AND LIGHTING</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">ACCESSORIES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SOFTWARE</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid" id="global-landing-div">
+            <div class="row">
+                <div class="col-12" style="padding:0">
+                    <video autoplay loop muted class="w-100">
+                        <source src="../assets/mixkit-drummer-playing.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
