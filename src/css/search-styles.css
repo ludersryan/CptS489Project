@@ -1,0 +1,102 @@
+
+/* STYLES FOR SEARCH/SEARCH PAGE FEED, refactor if desired */
+/* Putting my styles added in a new file to avoid merge commits, and referencing on pages needed. */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 65px auto;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-bar input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.filter-options {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.filter-options label, .filter-options select {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.search-results table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.search-results th, .search-results td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-results th {
+    background-color: #f2f2f2;
+}
+
+.search-results img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.search-results h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.search-results .price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.search-results .small-text {
+    font-size: 14px;
+    opacity: 0.7;
+}

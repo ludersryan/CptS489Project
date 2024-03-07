@@ -29,8 +29,7 @@ body {
     border-collapse: collapse;
 }
 
-.wishlist-table th,
-.wishlist-table td {
+.wishlist-table th, .wishlist-table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: left;
