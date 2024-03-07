@@ -1,0 +1,68 @@
+
+/* Putting my styles added in a new file to avoid merge commits, and referencing on pages needed. */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 65px auto;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.large-text {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.contact-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.contact-form input,
+.contact-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.contact-form select {
+    appearance: none;
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.contact-form button:hover {
+    background-color: #333;
+}
