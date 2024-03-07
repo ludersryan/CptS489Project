@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Additional refs/title section -->
+    <link rel="stylesheet" href="../css/search-styles.css">
+    <title>Support</title>
+    
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+
+    <!-- Search feed page is here (the page when you are searching, with example results having come up)-->
+    <div class="container">
+        
+        <div class="search-bar">
+
+            <h1><b>Search</b></h1> <!-- Content begins here, with the centered search mechanic. -->
+
+            <input type="text" id="search-input" placeholder="Search for instruments...">
+            <button id="search-btn">Search</button>
+
+        </div>
+        
+        <div class="filter-options">
+
+            <h2>Filter Options</h2>
+
+            <label for="distance-filter">Distance:</label>
+            <select id="distance-filter">
+
+                <option value="0-50">0-50 miles</option>
+                <option value="50-100">50-100 miles</option>
+                <option value="100-200">100-200 miles</option>
+                <option value="200+">200+ miles</option>
+
+            </select>
+            
+            <label for="condition-filter">Condition:</label>
+            <select id="condition-filter">
+
+                <option value="new">New</option>
+                <option value="used">Used</option>
+                <option value="like-new">Like New</option>
+                <option value="fair">Fair</option>
+
+            </select>
+
+            <!-- This section goes along with the function requirements aspect our last project propost use cases describing this page -->
+            <label for="recommendations-filter">Recommendations:</label>
+            <select id="recommendations-filter">
+
+                <option value="none">None</option>
+                <option value="by-occupation">By Occupation</option>
+                <option value="by-previous-sells">By Previous Transations</option>
+
+            </select>
+
+        </div>
+        
+        <div class="search-results">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Item</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Details</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td><img src="../assets/Epiphone-Ruby-Red-Metallic.jpg" alt="Item 1"></td>
+
+                        <td>
+                            <h3>Epiphone Electric</h3>
+                            <p>Ruby Red Metallic</p>
+                            <p class="small-text">Electric Guitar</p>
+                        </td>
+
+                        <td><span class="price">$1500</span></td>
+
+                        <td>
+                            <p>Condition: Used</p>
+                            <p>Seller: James Georgo</p>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><img src="../assets/Yamaha-Acoustic-Natural-Finish.jpg" alt="Item 2"></td>
+
+                        <td>
+                            <h3>Yamaha Acoustic</h3>
+                            <p>Natural Finish</p>
+                            <p class="small-text">Electric Guitar</p>
+                        </td>
+
+                        <td><span class="price">$1200</span></td>
+
+                        <td>
+                            <p>Condition: Like New</p>
+                            <p>Seller: Lucas Arbuckle</p>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><img src="../assets/Peavey-Electric.jpg" alt="Item 3"></td>
+
+                        <td>
+                            <h3>Peavey Electric</h3>
+                            <p>Natural Finish</p>
+                            <p class="small-text">Acoustic Guitar</p>
+                        </td>
+
+                        <td><span class="price">$800</span></td>
+
+                        <td>
+                            <p>Condition: New</p>
+                            <p>Seller: Halloway Smithy</p>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div id="footer-placeholder"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        $(function(){
+            $("#nav-placeholder").load("./nav.html");
+            $("#footer-placeholder").load("./footer.html");
+        });
+    </script>
+</body>
+</html>
+
+
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="search-styles.css">
+    <title>Search Page / Feed</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Page / Feed</h1>
+        
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search for instruments...">
+            <button id="search-btn">Search</button>
+        </div>
+        
+        <div class="filter-options">
+            <h2>Filter Options</h2>
+            <label for="distance-filter">Distance:</label>
+            <select id="distance-filter">
+                <option value="0-50">0-50 miles</option>
+                <option value="50-100">50-100 miles</option>
+                <option value="100-200">100-200 miles</option>
+                <option value="200+">200+ miles</option>
+            </select>
+            
+            <label for="condition-filter">Condition:</label>
+            <select id="condition-filter">
+                <option value="new">New</option>
+                <option value="used">Used</option>
+                <option value="like-new">Like New</option>
+                <option value="fair">Fair</option>
+            </select>
+        </div>
+        
+        <div class="search-results">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="item1.jpg" alt="Item 1"></td>
+                        <td>
+                            <h3>Gibson Les Paul</h3>
+                            <p>Sunburst Finish</p>
+                            <p class="small-text">Electric Guitar</p>
+                        </td>
+                        <td><span class="price">$1500</span></td>
+                        <td>
+                            <p>Condition: Used</p>
+                            <p>Seller: John Doe</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="item2.jpg" alt="Item 2"></td>
+                        <td>
+                            <h3>Fender Stratocaster</h3>
+                            <p>Black Finish</p>
+                            <p class="small-text">Electric Guitar</p>
+                        </td>
+                        <td><span class="price">$1200</span></td>
+                        <td>
+                            <p>Condition: Like New</p>
+                            <p>Seller: Jane Smith</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="item3.jpg" alt="Item 3"></td>
+                        <td>
+                            <h3>Yamaha Acoustic</h3>
+                            <p>Natural Finish</p>
+                            <p class="small-text">Acoustic Guitar</p>
+                        </td>
+                        <td><span class="price">$800</span></td>
+                        <td>
+                            <p>Condition: New</p>
+                            <p>Seller: Robert Johnson</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+    
+-->
