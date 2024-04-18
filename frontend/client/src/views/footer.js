@@ -1,4 +1,4 @@
-import './css/style.css'
+import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function FooterBar() {

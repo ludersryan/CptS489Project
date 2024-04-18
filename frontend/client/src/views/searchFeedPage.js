@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css">
-
-    <!-- Additional refs/title section -->
-    <link rel="stylesheet" href="../css/search-styles.css">
-    <title>Search</title>
-    
-</head>
-<body>
-    <div id="nav-placeholder"></div>
+import '../css/search-styles.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-    <!-- Search feed page is here (the page when you are searching, with example results having come up)-->
-    <div class="container">
+function SearchFeedPage() {
+    return (
+        <div className="container">
         
-        <div class="search-bar">
+        <div className="search-bar">
 
-            <h1><b>Search</b></h1> <!-- Content begins here, with the centered search mechanic. -->
+            <h1><b>Search</b></h1>
 
-            <input type="text" id="search-input" placeholder="Search for instruments...">
+            <input type="text" id="search-input" placeholder="Search for instruments..."/>
             <button id="search-btn">Search</button>
 
         </div>
         
-        <div class="filter-options">
+        <div className="filter-options">
 
             <h2>Filter Options</h2>
 
@@ -51,7 +39,6 @@
 
             </select>
 
-            <!-- This section goes along with the function requirements aspect our last project propost use cases describing this page -->
             <label for="recommendations-filter">Recommendations:</label>
             <select id="recommendations-filter">
 
@@ -63,7 +50,7 @@
 
         </div>
         
-        <div class="search-results">
+        <div className="search-results">
 
             <table>
 
@@ -84,15 +71,15 @@
 
                     <tr>
 
-                        <td><img src="../assets/Epiphone-Ruby-Red-Metallic.jpg" alt="Item 1"></td>
+                        <td><img src="../images/Epiphone-Ruby-Red-Metallic.jpg" alt="Item 1"/></td>
 
                         <td>
                             <h3>Epiphone Electric</h3>
                             <p>Ruby Red Metallic</p>
-                            <p class="small-text">Electric Guitar</p>
+                            <p className="small-text">Electric Guitar</p>
                         </td>
 
-                        <td><span class="price">$1500</span></td>
+                        <td><span className="price">$1500</span></td>
 
                         <td>
                             <p>Condition: Used</p>
@@ -103,15 +90,15 @@
 
                     <tr>
 
-                        <td><img src="../assets/Yamaha-Acoustic-Natural-Finish.jpg" alt="Item 2"></td>
+                        <td><img src="../images/Yamaha-Acoustic-Natural-Finish.jpg" alt="Item 2"/></td>
 
                         <td>
                             <h3>Yamaha Acoustic</h3>
                             <p>Natural Finish</p>
-                            <p class="small-text">Acoustic Guitar</p>
+                            <p className="small-text">Acoustic Guitar</p>
                         </td>
 
-                        <td><span class="price">$1200</span></td>
+                        <td><span className="price">$1200</span></td>
 
                         <td>
                             <p>Condition: Like New</p>
@@ -122,15 +109,15 @@
 
                     <tr>
 
-                        <td><img src="../assets/Peavey-Electric.jpg" alt="Item 3"></td>
+                        <td><img src="../images/Peavey-Electric.jpg" alt="Item 3"/></td>
 
                         <td>
                             <h3>Peavey Electric</h3>
                             <p>Natural Finish</p>
-                            <p class="small-text">Electric Guitar</p>
+                            <p className="small-text">Electric Guitar</p>
                         </td>
 
-                        <td><span class="price">$800</span></td>
+                        <td><span className="price">$800</span></td>
 
                         <td>
                             <p>Condition: New</p>
@@ -145,16 +132,7 @@
         </div>
 
     </div>
+    );
+}
 
-
-    <div id="footer-placeholder"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script>
-        $(function(){
-            $("#nav-placeholder").load("./nav.html");
-            $("#footer-placeholder").load("./footer.html");
-        });
-    </script>
-</body>
-</html>
+export default SearchFeedPage;

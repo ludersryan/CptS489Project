@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import App from './App';
-import NavBar from './navBar';
-import FooterBar from './footer';
+import HomePage from './views/homePage'
+import NavBar from './views/navBar';
+import FooterBar from './views/footer';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <NavBar />
-    <App />
+    <HomePage />
     <FooterBar />
   </React.StrictMode>
 );

@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css">
+import '../css/legal-styles.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-    <!-- Additional refs/title section -->
-    <link rel="stylesheet" href="../css/legal-styles.css">
-    <title>Legal</title>
-
-</head>
-<body>
-    <div id="nav-placeholder"></div>
+function legalPage() {
+  return (
+    <>
     <div id="page-content">
 
-        <div class="container">
-        
+        <div className="container">
             <h1><b>Legal</b></h1>
             <h2>Privacy Policy</h2>
             <p1> We are committed to maintaining the accuracy, confidentiality, and security of your personally identifiable information ("Personal Information"). As part of this commitment, our privacy policy governs our actions as they relate to the collection, use and disclosure of Personal Information. Our privacy policy is based upon the values set by the Canadian Standards Association's Model Code for the Protection of Personal Information and Canada's Personal Information Protection and Electronic Documents Act.</p1>
@@ -24,7 +14,7 @@
             <p1>We are responsible for maintaining and protecting the Personal Information under our control. We have designated an individual or individuals who is/are responsible for compliance with our privacy policy.</p1>
             <h2>2. Identifying Purposes</h2>
             <p1>We collect, use and disclose Personal Information to provide you with the product or service you have requested and to offer you additional products and services we believe you might be interested in. The purposes for which we collect Personal Information will be identified before or at the time we collect the information. In certain circumstances, the purposes for which information is collected may be clear, and consent may be implied, such as where your name, address and payment information is provided as part of the order process.</p1>
-            <h2>3. Consent</h3>
+            <h2>3. Consent</h2>
             <p1>Knowledge and consent are required for the collection, use or disclosure of Personal Information except where required or permitted by law. Providing us with your Personal Information is always your choice. However, your decision not to provide certain information may limit our ability to provide you with our products or services. We will not require you to consent to the collection, use, or disclosure of information as a condition to the supply of a product or service, except as required to be able to supply the product or service.</p1>
             <h2>4. Limiting Collection</h2>
             <p1>The Personal Information collected will be limited to those details necessary for the purposes identified by us. With your consent, we may collect Personal Information from you in person, over the telephone or by corresponding with you via mail, facsimile, or the Internet.</p1>
@@ -41,20 +31,9 @@
             <h2>10. Handling Customer Complaints and Suggestions </h2>
             <p1>You may visit our support page with questions or enquiries with respect to our privacy policy or our practices.</p1>
         </div>
-
-        
     </div>
+    </>
+  );
+}
 
-
-
-    <div id="footer-placeholder"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script>
-        $(function(){
-            $("#nav-placeholder").load("./nav.html");
-            $("#footer-placeholder").load("./footer.html");
-        });
-    </script>
-</body>
-</html>
+export default legalPage;

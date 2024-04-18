@@ -1,7 +1,7 @@
-import './css/style.css'
+import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+function HomePage() {
   return (
     <div id = "app">
       <div id="nav-placeholder"></div>
@@ -19,7 +19,7 @@ function App() {
                         
                       </div>
                       <video autoPlay loop muted className="w-100" id="landing-video">
-                          <source src={require("./images/mixkit-drummer-playing.mp4")} type="video/mp4"/>
+                          <source src={require("../images/mixkit-drummer-playing.mp4")} type="video/mp4"/>
                       </video>
                       
                   </div>
@@ -33,38 +33,38 @@ function App() {
                       <div className="card-body">
                           <h5 className="card-title">Gibson</h5>
                       </div>
-                      <img className="card-img-bottom" src={require("./images/gibson.jpg")}  alt="Card gibson"/>
+                      <img className="card-img-bottom" src={require("../images/gibson.jpg")}  alt="Card gibson"/>
                   </div>
                   <div className="card">
                       <div className="card-body">
                           <h5 className="card-title">Fender</h5>
                       </div>  
-                      <img className="card-img-bottom"src={require("./images/Fender.jpg")}  alt="Card fender"/>
+                      <img className="card-img-bottom"src={require("../images/Fender.jpg")}  alt="Card fender"/>
                   </div>
                   <div className="card">
                       
                       <div className="card-body">
                           <h5 className="card-title">Yamaha</h5>
                       </div>
-                      <img className="card-img-bottom" src={require("./images/yamaha.jpg")} alt="Card yamaha"/>
+                      <img className="card-img-bottom" src={require("../images/yamaha.jpg")} alt="Card yamaha"/>
                   </div>
                   <div className="card">
                       <div className="card-body">
                           <h5 className="card-title">Pearl</h5>
                       </div>
-                      <img className="card-img-bottom" src={require("./images/pearl.jpg")} alt="Card pearl"/>
+                      <img className="card-img-bottom" src={require("../images/pearl.jpg")} alt="Card pearl"/>
                   </div>
                   <div className="card">
                       <div className="card-body">
                           <h5 className="card-title">Martin</h5>
                       </div>
-                      <img className="card-img-bottom" src={require("./images/martin.jpg")} alt="Card martin"/>
+                      <img className="card-img-bottom" src={require("../images/martin.jpg")} alt="Card martin"/>
                   </div>
                   <div className="card">
                       <div className="card-body">
                           <h5 className="card-title">Stradivarius</h5>
                       </div>
-                      <img className="card-img-bottom" src={require("./images/Stradivarius.jpg")}  alt="Cardstradivarius"/>
+                      <img className="card-img-bottom" src={require("../images/Stradivarius.jpg")}  alt="Cardstradivarius"/>
                   </div>
               </div>
           </div>
@@ -72,4 +72,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomePage;
