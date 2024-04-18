@@ -2,7 +2,7 @@ import '../css/product-listing-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function productListingPage() {
+export default function productListingPage() {
     return (
         <div id="page-content">
             <div className="container">
@@ -39,5 +39,3 @@ function productListingPage() {
         </div>
     );
 }
-
-export default productListingPage;

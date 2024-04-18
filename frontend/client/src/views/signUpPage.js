@@ -2,7 +2,7 @@ import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function SignUpPage() {
+export default function SignUpPage() {
     return (
         <div id="page-content">
             <div className="container">
@@ -19,5 +19,3 @@ function SignUpPage() {
         </div>
     );
 }
-
-export default SignUpPage;

@@ -4,6 +4,8 @@ body {
   font-family: "Overpass Mono", monospace;
   font-size: 15px;
   padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 #global-top-nav{

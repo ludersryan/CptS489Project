@@ -1,7 +1,7 @@
 import '../css/wishlist-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function WishListPage() {
+export default function WishListPage() {
     return (
         <div className="container">
 
@@ -83,5 +83,3 @@ function WishListPage() {
     </div>
     );
 }
-
-export default WishListPage;

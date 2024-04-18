@@ -1,7 +1,10 @@
 import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function NavBar() {
+import { Link } from 'react-router-dom'
+
+export default function NavBar() {
+
   return (
     <>
         <nav className="navbar navbar-expand-lg bg-body-tertiary" id="global-top-nav">
@@ -18,16 +21,16 @@ function NavBar() {
                 <div className="d-flex w-50" id="navbar-div">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="./index.html">HOME</a>
+                            <Link to = '/' className="nav-link active" aria-current="page" >HOME</Link>
                         </li>
                         <li className="nav-item">
                             <button className="btn btn-outline-primary" id="global-sell-button" aria-pressed="false">SELL</button>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">SHOP</a>
+                            <Link to = '/Search' className="nav-link">SHOP</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">LEGAL</a>
+                            <Link to = '/Legal' className="nav-link">LEGAL</Link>
                         </li>
                         <div className = "btn-group" id="nav-btn-group">
                             <button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button>
@@ -73,5 +76,3 @@ function NavBar() {
     </>
   );
 }
-
-export default NavBar;

@@ -1,7 +1,7 @@
 import '../css/create-listing-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function CreateListingPage() {
+export default function CreateListingPage() {
   return (
     <>
         <div id="nav-placeholder"></div>
@@ -45,5 +45,3 @@ function CreateListingPage() {
     </>
   );
 }
-
-export default CreateListingPage;

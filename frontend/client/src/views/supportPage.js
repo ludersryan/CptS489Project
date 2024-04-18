@@ -1,9 +1,9 @@
-import '../css/style.css'
+import '../css/support-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-function SupportPage() {
+export default function SupportPage() {
     return (
         <div id="page-content">
 
@@ -62,4 +62,3 @@ function SupportPage() {
     );
 }
 
-export default SupportPage;

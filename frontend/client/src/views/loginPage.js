@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-function LoginPage() {
+export default function LoginPage() {
     return (
         <div id="page-content">
             <div className="container">
@@ -19,7 +19,3 @@ function LoginPage() {
         </div>
     );
 }
-
-
-
-export default LoginPage;

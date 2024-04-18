@@ -1,8 +1,8 @@
-import '../css/style.css'
+import '../css/profile-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function profilePage() {
+export default function profilePage() {
     return (
         <div className="container">
 
@@ -61,5 +61,3 @@ function profilePage() {
     </div>
     );
 }
-
-export default profilePage;

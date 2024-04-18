@@ -1,7 +1,7 @@
 import '../css/legal-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function legalPage() {
+export default function LegalPage() {
   return (
     <>
     <div id="page-content">
@@ -35,5 +35,3 @@ function legalPage() {
     </>
   );
 }
-
-export default legalPage;

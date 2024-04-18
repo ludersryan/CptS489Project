@@ -2,7 +2,7 @@ import '../css/search-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function SearchFeedPage() {
+export default function SearchFeedPage() {
     return (
         <div className="container">
         
@@ -19,7 +19,7 @@ function SearchFeedPage() {
 
             <h2>Filter Options</h2>
 
-            <label for="distance-filter">Distance:</label>
+            <label htmlFor="distance-filter">Distance:</label>
             <select id="distance-filter">
 
                 <option value="0-50">0-50 miles</option>
@@ -29,7 +29,7 @@ function SearchFeedPage() {
 
             </select>
             
-            <label for="condition-filter">Condition:</label>
+            <label htmlFor="condition-filter">Condition:</label>
             <select id="condition-filter">
 
                 <option value="new">New</option>
@@ -39,7 +39,7 @@ function SearchFeedPage() {
 
             </select>
 
-            <label for="recommendations-filter">Recommendations:</label>
+            <label htmlFor="recommendations-filter">Recommendations:</label>
             <select id="recommendations-filter">
 
                 <option value="none">None</option>
@@ -134,5 +134,3 @@ function SearchFeedPage() {
     </div>
     );
 }
-
-export default SearchFeedPage;

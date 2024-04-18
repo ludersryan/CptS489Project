@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import HomePage from './views/homePage'
-import NavBar from './views/navBar';
-import FooterBar from './views/footer';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <NavBar />
-    <HomePage />
-    <FooterBar />
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

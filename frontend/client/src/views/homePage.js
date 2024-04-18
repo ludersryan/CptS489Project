@@ -1,7 +1,7 @@
 import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function HomePage() {
+export default function HomePage() {
   return (
     <div id = "app">
       <div id="nav-placeholder"></div>
@@ -71,5 +71,3 @@ function HomePage() {
     </div>
   );
 }
-
-export default HomePage;
