@@ -24,7 +24,7 @@ export default function NavBar() {
                             <Link to = '/' className="nav-link active" aria-current="page" >HOME</Link>
                         </li>
                         <li className="nav-item">
-                            <button className="btn btn-outline-primary" id="global-sell-button" aria-pressed="false">SELL</button>
+                            <Link to = '/createListing'><button className="btn btn-outline-primary" id="global-sell-button" aria-pressed="false">SELL</button></Link>
                         </li>
                         <li className="nav-item">
                             <Link to = '/Search' className="nav-link">SHOP</Link>
@@ -33,8 +33,8 @@ export default function NavBar() {
                             <Link to = '/Legal' className="nav-link">LEGAL</Link>
                         </li>
                         <div className = "btn-group" id="nav-btn-group">
-                            <button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button>
-                            <button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false">SIGN UP</button>
+                            <Link to = '/login'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button></Link>
+                            <Link to = '/signup'><button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false">SIGN UP</button></Link>
                         </div>
                     </ul>
                     </div>

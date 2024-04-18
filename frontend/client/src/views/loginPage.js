@@ -9,9 +9,9 @@ export default function LoginPage() {
             <div className="container">
                 <h1><b>Login</b></h1>
                 <div className="contact-form">
-                    <label for="email"><b>Email</b></label>
+                    <label htmlFor="email"><b>Email</b></label>
                     <input type="email" id="email" name="email"/>
-                    <label for="password"><b>Password</b></label>
+                    <label htmlFor="password"><b>Password</b></label>
                     <input type="text" id="password" name="password"/>
                     <button type="submit" id="login-btn">LOG IN</button>
                 </div>
