@@ -38,6 +38,7 @@ export async function addPostResolver(parent, args, context){
     try{
         console.log(context.req.headers['authorization']);
         const user = await verifyToken(context.req.headers['authorization']);
+        
         const newPost = new Post({
             name: args.name,
             brand: args.brand,

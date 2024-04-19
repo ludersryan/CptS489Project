@@ -1,6 +1,7 @@
 
 import User from '../models/user.model.js';
 import { verifyToken } from '../helpers/jwt.js';
+import bcrypt from 'bcrypt';
 
 export default async function updateUserResolver(parent, args, context){
     try{
@@ -11,10 +12,11 @@ export default async function updateUserResolver(parent, args, context){
                 $set: {
                     name: args.name,
                     email: args.email,
-                    password: await User.validatePassword(args.password),
+                    password: await bcrypt.hash(args.password, 10),
                 },
             },
             { new : true }
+
         );
     }
     catch(err){

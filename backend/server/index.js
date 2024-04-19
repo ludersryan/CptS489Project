@@ -29,7 +29,6 @@ app.all("/graphql", (req, res) =>
     schema,
     context: { req, res },
     graphiql: process.env.NODE_ENV === "development",
-    context: { req },
     rootValue: { },
   })(req, res)
 )

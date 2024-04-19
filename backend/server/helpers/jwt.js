@@ -8,26 +8,24 @@ dotenv.config();
 
 
 export const verifyToken = (token) => {
-    return new Promise((resolve, reject) => {
-        if (!token) {
-            reject(new Error('No token provided') );
+    if (!token) {
+        throw new Error('No token provided');
+    }
+    const bearerToken = token.split(' ')[1];
+    if(!bearerToken){
+        throw new Error('Invalid token format');
+    }
+    try{
+        const authData = jwt.verify(bearerToken, public_key);
+        const user = User.findById(authData.id).exec();
+        if (!user) {
+            throw new Error('User not found');
         }
-        const bearerToken = token.split(' ')[1];
-        jwt.verify(bearerToken, public_key, async (err, authData) => {
-            if (err) {
-                reject( new Error('Invalid token') );
-            }
-            else{
-                const user = User.findById(authData.id);
-                if (!user) {
-                    reject(new Error('User not found'));
-                }
-                else {
-                    resolve(user);
-                }
-            }
-        });
-    });
+        return user;
+    }
+    catch(err){
+        throw new Error(err.message);
+    }
 };
 
 export const generateToken = (user) => {
