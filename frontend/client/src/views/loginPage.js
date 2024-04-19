@@ -6,12 +6,12 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { LOGIN } from '../graphql/mutations.js';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
     const [error, setError] = useState();
     const [data, setData] = useState();
-
+    const navigate = useNavigate();
     const [mutate] = useMutation(LOGIN, {
         onError: (error) => {
             setError(error.message);
@@ -21,6 +21,8 @@ export default function LoginPage() {
             localStorage.setItem('token', token);
             setData(data);
             setError(null);
+            navigate('/');
+            window.dispatchEvent(new Event('storage')); // Trigger the event listener (using local storage, another way ?)
         }
 
     });
@@ -43,6 +45,8 @@ export default function LoginPage() {
         }
         
     }
+
+
 
     const resetForm = () => {
         document.getElementById('loginForm').reset();

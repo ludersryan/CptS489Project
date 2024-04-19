@@ -1,5 +1,7 @@
 import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   return (
@@ -13,8 +15,8 @@ export default function HomePage() {
                           <h1 id="landing-header">WELCOME TO SOUNDSWAP</h1>
                           <p id="landing-paragraph">The premiere marketplace to buy, sell and discover authenticated music equipment from reputable sellers</p>
                           <div className="btn group" id="landing-btn-group">
-                              <button className="btn btn-outline-primary" id="landing-button" aria-pressed="false">SHOP NOW</button>
-                              <button className="btn btn-outline-primary" id="landing-button" aria-pressed="false">SELL NOW</button>
+                              <Link to = '/Search'><button className="btn btn-outline-primary" id="landing-button" aria-pressed="false">SHOP NOW</button></Link>
+                              <Link to = '/createListing'><button className="btn btn-outline-primary" id="landing-button" aria-pressed="false">SELL NOW</button></Link>
                           </div>
                         
                       </div>

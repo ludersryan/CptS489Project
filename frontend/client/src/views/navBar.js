@@ -7,27 +7,36 @@ import { useState } from 'react';
 
 
 export default function NavBar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
+    const checkToken = () => {
         const token = localStorage.getItem('token');
-        if(token){
-            setIsLoggedIn(true);
+        setIsLoggedIn(!!token);
+    }
+    
+    useEffect(() => { // Effect for checking login token / status
+        checkToken();
+        window.addEventListener('storage', checkToken); // Set up an event listener
+        return () => {
+            window.removeEventListener('storage', checkToken); // Clean up the event listener 
         }
     }, []);
-
-    // logout function
+    
     const logout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
     }
+    
+
 
 
   return (
     <>
         <nav className="navbar navbar-expand-lg bg-body-tertiary" id="global-top-nav">
             <div className="container-fluid">
-            <a className="navbar-brand" href="./index.html">SoundSwap</a>
+            <a className="navbar-brand" href="/">SoundSwap</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
