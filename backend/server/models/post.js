@@ -9,6 +9,7 @@ const postSchema = new Schema({
     yearProduced: Date,
     description: String,
     favorites: Number,
+    price: Number,
     condition: {
         type: String,
         enum: ['Mint', 'Excellent', 'Good', 'Fair', 'Poor', 'For parts or not working']

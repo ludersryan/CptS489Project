@@ -9,6 +9,8 @@ const {
     GraphQLList,
     GraphQLInt,
     GraphQLNonNull,
+    GraphQLEnumType,
+    GraphQLFloat,
 } = require('graphql');
 
 
@@ -23,6 +25,7 @@ const PostType = new GraphQLObjectType({
         description: {type: GraphQLString },
         condition: {type: GraphQLString },
         favorites: {type: GraphQLInt},
+        price: {type: GraphQLFloat},
         user: {
             type: UserType,
             resolve(parent, args){
@@ -59,6 +62,19 @@ const RootQuery = new GraphQLObjectType({
                 return Post.findById(args.id);
             },
         },
+        searchPosts: {
+            type: new GraphQLList(PostType),
+            args: {
+                name: {type: GraphQLString},
+                brand: {type: GraphQLString},
+                condition: {type: GraphQLString},
+                price: {type: GraphQLFloat},
+                yearProduced: {type: GraphQLString},
+            },
+            resolve(parent, args){
+                return Post.find(args);
+            },
+        },
         users: {
             type: new GraphQLList(UserType),
             resolve(parent,args){
@@ -75,9 +91,11 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
+        // user queries
         addUser: {
             type: UserType,
             args : {
@@ -106,10 +124,102 @@ const mutation = new GraphQLObjectType({
                 return User.findOneAndDelete(args.id);
             },
         },
+
+        // post queries
+        addPost: {
+            type: PostType,
+            args : {
+                name: {type: new GraphQLNonNull(GraphQLString)},
+                description: {type:GraphQLString},
+                brand: {type: new GraphQLNonNull(GraphQLString)},
+                yearProduced: {type: GraphQLString},
+                price: {type: new GraphQLNonNull(GraphQLFloat)},
+                favorites: {
+                    type: GraphQLInt,
+                    defaultValue: 0
+                },
+                condition: {
+                    type: new GraphQLEnumType({
+                        name: 'PostCondition',
+                        values :{
+                            'Mint': {value: 'Mint'},
+                            'Excellent': {value: 'Excellent'},
+                            'Good': {value: 'Good'},
+                            'Fair': {value: 'Fair'},
+                            'Poor': {value: 'Poor'},
+                            'Parts': {value: 'For parts or not working'},
+                        }
+                    }),
+                    defaultValue: 'None',
+                },
+                userId: {type: new GraphQLNonNull(GraphQLID)},
+            },
+            resolve(parent, args){
+                const post = new Post({
+                    name: args.name,
+                    description: args.description,
+                    brand: args.brand,
+                    yearProduced: args.yearProduced,
+                    favorites: args.favorites || 0,
+                    condition: args.condition,
+                    userId: args.userId,
+                });
+                return post.save();
+            },
+        },
+        deletePost: {
+            type: PostType,
+            args : {
+                id : {type: new GraphQLNonNull(GraphQLID)},
+            },
+            resolve(parent, args){
+                return Post.findByIdAndDelete(args.id)
+            },
+
+        },
+        updatePost: {
+            type: PostType,
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLID)},
+                name: {type: GraphQLString},
+                brand: {type: GraphQLString},
+                yearProduced: {type: GraphQLString},
+                description: {type: GraphQLString},
+                price: {type: GraphQLFloat},
+                favorites: {type: GraphQLInt},
+                condition: {
+                    type: new GraphQLEnumType({
+                        name: 'PostConditionUpdate',
+                        values :{
+                            'Mint': {value: 'Mint'},
+                            'Excellent': {value: 'Excellent'},
+                            'Good': {value: 'Good'},
+                            'Fair': {value: 'Fair'},
+                            'Poor': {value: 'Poor'},
+                            'Parts': {value: 'For parts or not working'},
+                        }
+                    }),
+                },
+            },
+            resolve(parent,args){
+                return Post.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set: {
+                            name: args.name,
+                            description: args.description,
+                            condition: args.condition,
+
+                        },
+                    },
+                    { new : true }
+                );
+            }
+        }
     },
 });
 
 module.exports = new GraphQLSchema({
     query: RootQuery,
-    mutation,
+    mutation
 });
