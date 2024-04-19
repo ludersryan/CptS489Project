@@ -15,9 +15,9 @@ export default function CreateListingPage() {
                             <img src="../images/assets/upload-image.PNG" alt="Item-image1" className="image"/>
                         </div>
                         <div className = "right-section">
-                            <label for="product-name"><b>Product Name</b></label>
+                            <label htmlFor="product-name"><b>Product Name</b></label>
                             <input type="text" id="product-name" name="product-name"/>
-                            <label for="condition"><b>Condition</b></label>
+                            <label htmlFor="condition"><b>Condition</b></label>
                             <select id="condition" name="condition" className="form-control">
                                 <option value="">Select Condition</option>
                                 <option value="new">New</option>
@@ -28,9 +28,9 @@ export default function CreateListingPage() {
                                 <option value="used">Used</option>
                                 <option value="used">Poor</option>
                             </select>
-                            <label for="product-price"><b>Price</b></label>
+                            <label htmlFor="product-price"><b>Price</b></label>
                             <input type="text" id="product-price" name="product-price"/>
-                            <label for="fixed-price"><b>Accept Bids and Offers?</b></label>
+                            <label htmlFor="fixed-price"><b>Accept Bids and Offers?</b></label>
                             <select id="fixed-price" name="fixed-price" className="form-control">
                                 <option value="">Select Option</option>
                                 <option value="false">Yes</option>

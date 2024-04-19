@@ -1,5 +1,7 @@
 
 /* set default text */
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300..700&display=swap');
+
 body {
   font-family: "Overpass Mono", monospace;
   font-size: 15px;
@@ -157,10 +159,12 @@ body {
   height: 300px;
 }
 
+/*  make the image the same size */
 .card img{
   object-fit:cover;
   height: inherit;
   overflow: hidden;
+
 }
 .card:hover{
   box-shadow: 0 0 1px 1px grey;

@@ -13,10 +13,14 @@ export default async function signUpResolver(parent, args){
         const newUser = new User({
             name: args.name,
             email: args.email,
-            password: await User.validatePassword(args.password),
+            password: args.password,
             dateCreated: new Date()
         });
-        return await newUser.save();
+        await newUser.save();
+        return {
+            name: newUser.name,
+            email: newUser.email
+        }
     } catch (err) {
         console.log("Error in resolver", err);  // Log any errors
         throw new Error(err.message);
