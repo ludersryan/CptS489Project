@@ -1,7 +1,12 @@
-const User = require('../models/user')
-const Post = require('../models/post')
+import User from '../models/user.model.js'
+import Post from '../models/post.model.js'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
+import { generateToken } from '../helpers/jwt.js'
+import loginResolver from '../resolvers/loginResolver.js'
+import signUpResolver from '../resolvers/signUpResolver.js'
 
-const {
+import {
     GraphQLObjectType,
     GraphQLID,
     GraphQLString,
@@ -11,7 +16,8 @@ const {
     GraphQLNonNull,
     GraphQLEnumType,
     GraphQLFloat,
-} = require('graphql');
+} from 'graphql';
+import { token } from 'morgan'
 
 
 
@@ -44,6 +50,14 @@ const UserType = new GraphQLObjectType({
         password: {type: GraphQLString},
         dateCreated: {type: GraphQLString},
     }),
+});
+
+const LoginResponseType = new GraphQLObjectType({
+    name: 'LoginResponse',
+    fields: {
+        token: {type: GraphQLString},
+        id: {type: GraphQLID},
+    },
 });
 
 const RootQuery = new GraphQLObjectType({
@@ -88,6 +102,14 @@ const RootQuery = new GraphQLObjectType({
                 return User.findById(args.id);
             },
         },
+        login: {
+            type: LoginResponseType,
+            args: {
+                email: {type: new GraphQLNonNull(GraphQLString)},
+                password: {type: new GraphQLNonNull(GraphQLString)},
+            },
+            resolve: loginResolver,
+        },
     }
 });
 
@@ -102,18 +124,9 @@ const mutation = new GraphQLObjectType({
                 name: {type: new GraphQLNonNull(GraphQLString)},
                 email: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
-                dateCreated: {type: new GraphQLNonNull(GraphQLString)},
+                dateCreated: {type: GraphQLString},
             },
-            resolve(parent, args){
-                const user = new User({
-                    name: args.name,
-                    email: args.email,
-                    password: args.password,
-                    dateCreated: args.dateCreated,
-                });
-
-                return user.save();
-            }
+            resolve: signUpResolver,
         },
         deleteUser: {
             type: UserType,
@@ -129,6 +142,7 @@ const mutation = new GraphQLObjectType({
         addPost: {
             type: PostType,
             args : {
+                token: {type: new GraphQLNonNull(GraphQLString)},
                 name: {type: new GraphQLNonNull(GraphQLString)},
                 description: {type:GraphQLString},
                 brand: {type: new GraphQLNonNull(GraphQLString)},
@@ -150,7 +164,7 @@ const mutation = new GraphQLObjectType({
                             'Parts': {value: 'For parts or not working'},
                         }
                     }),
-                    defaultValue: 'None',
+                    defaultValue: 'N/A',
                 },
                 userId: {type: new GraphQLNonNull(GraphQLID)},
             },
@@ -219,7 +233,7 @@ const mutation = new GraphQLObjectType({
     },
 });
 
-module.exports = new GraphQLSchema({
+export default new GraphQLSchema({
     query: RootQuery,
     mutation
 });

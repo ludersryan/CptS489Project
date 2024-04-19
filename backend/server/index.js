@@ -1,18 +1,27 @@
-const express = require("express")
-require('dotenv').config()
-const { createHandler } = require("graphql-http/lib/use/express")
-const schema = require('./schema/schema')
+import express from 'express'
+import dotenv from 'dotenv'
+import { createHandler } from 'graphql-http/lib/use/express'
+import schema from './schema/schema.js'
+import connectDB from './config/db.js'
+import { ruruHTML } from 'ruru/server'
+import morgan from 'morgan'
+import cors from 'cors'
+
 const port = process.env.PORT || 5000
 
-const connectDB = require('./config/db')
-
-var { ruruHTML } = require("ruru/server")
+dotenv.config()
 
 
 connectDB();
 
 
-var app = express()
+const app = express()
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan('dev'))
+app.use(cors())
+
+
 
 // Create and use the GraphQL handler.
 app.all(
