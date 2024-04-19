@@ -24,14 +24,17 @@ app.use(cors())
 
 
 // Create and use the GraphQL handler.
-app.all(
-  "/graphql",
+app.all("/graphql", (req, res) =>
   createHandler({
-    schema: schema,
-    rootValue: {},
-    graphiql: process.env.NODE_ENV === 'development'
-  })
-);
+    schema,
+    context: { req, res },
+    graphiql: process.env.NODE_ENV === "development",
+    context: { req },
+    rootValue: { },
+  })(req, res)
+)
+
+
 
 // Serve the GraphiQL IDE.
 app.get("/", (_req, res) => {

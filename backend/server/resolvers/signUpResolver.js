@@ -13,7 +13,7 @@ export default async function signUpResolver(parent, args){
         const newUser = new User({
             name: args.name,
             email: args.email,
-            password: args.password,
+            password: await User.validatePassword(args.password),
             dateCreated: new Date()
         });
         return await newUser.save();

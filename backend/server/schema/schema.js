@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt'
 import { generateToken } from '../helpers/jwt.js'
 import loginResolver from '../resolvers/loginResolver.js'
 import signUpResolver from '../resolvers/signUpResolver.js'
+import { addPostResolver, updatePostResolver } from '../resolvers/postResolver.js'
+import { updateUserResolver } from '../resolvers/updateUserResolver.js'
 
 import {
     GraphQLObjectType,
@@ -128,6 +130,17 @@ const mutation = new GraphQLObjectType({
             },
             resolve: signUpResolver,
         },
+        updateUser: {
+            type: UserType,
+            args : {
+                id: {type: new GraphQLNonNull(GraphQLID)},
+                name: {type: GraphQLString},
+                email: {type: GraphQLString},
+                password: {type: GraphQLString},
+                dateCreated: {type: GraphQLString},
+            },
+            resolve: updateUserResolver,
+        },
         deleteUser: {
             type: UserType,
             args : {
@@ -142,7 +155,6 @@ const mutation = new GraphQLObjectType({
         addPost: {
             type: PostType,
             args : {
-                token: {type: new GraphQLNonNull(GraphQLString)},
                 name: {type: new GraphQLNonNull(GraphQLString)},
                 description: {type:GraphQLString},
                 brand: {type: new GraphQLNonNull(GraphQLString)},
@@ -168,18 +180,7 @@ const mutation = new GraphQLObjectType({
                 },
                 userId: {type: new GraphQLNonNull(GraphQLID)},
             },
-            resolve(parent, args){
-                const post = new Post({
-                    name: args.name,
-                    description: args.description,
-                    brand: args.brand,
-                    yearProduced: args.yearProduced,
-                    favorites: args.favorites || 0,
-                    condition: args.condition,
-                    userId: args.userId,
-                });
-                return post.save();
-            },
+            resolve : addPostResolver,
         },
         deletePost: {
             type: PostType,
@@ -215,20 +216,7 @@ const mutation = new GraphQLObjectType({
                     }),
                 },
             },
-            resolve(parent,args){
-                return Post.findByIdAndUpdate(
-                    args.id,
-                    {
-                        $set: {
-                            name: args.name,
-                            description: args.description,
-                            condition: args.condition,
-
-                        },
-                    },
-                    { new : true }
-                );
-            }
+            resolve: updatePostResolver,
         }
     },
 });

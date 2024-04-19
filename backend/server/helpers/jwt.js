@@ -1,21 +1,34 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { private_key, public_key } from './key.js';
+import User from '../models/user.model.js';
 
 
 dotenv.config();
 
-export const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(403).send({ auth: false, message: 'No token provided.' });
 
-    jwt.verify(token, public_key, (err, decoded) => {
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-
-        req.userId = decoded.id;
-        next();
+export const verifyToken = (token) => {
+    return new Promise((resolve, reject) => {
+        if (!token) {
+            reject(new Error('No token provided') );
+        }
+        const bearerToken = token.split(' ')[1];
+        jwt.verify(bearerToken, public_key, async (err, authData) => {
+            if (err) {
+                reject( new Error('Invalid token') );
+            }
+            else{
+                const user = User.findById(authData.id);
+                if (!user) {
+                    reject(new Error('User not found'));
+                }
+                else {
+                    resolve(user);
+                }
+            }
+        });
     });
-}
+};
 
 export const generateToken = (user) => {
     return jwt.sign({ id: user.id, name: user.name }, private_key, {
