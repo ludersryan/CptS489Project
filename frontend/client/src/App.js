@@ -9,7 +9,7 @@ import CreateListingPage from "./views/createListingPage";
 import ProfilePage from "./views/profilePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router";
-import { UserProvider } from "./userContext";
+
 
 
 
@@ -17,7 +17,7 @@ export default function App() {
 
     
     return (
-        <UserProvider>
+        <>
             <NavBar/>
                 <Routes>
                     <Route path="/" element={<HomePage/>}/>
@@ -29,6 +29,6 @@ export default function App() {
                     <Route path = "/profile" element={<ProfilePage/>}/>
                 </Routes>
             <FooterBar/>
-        </UserProvider>
+        </>
     );
 }

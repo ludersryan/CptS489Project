@@ -6,14 +6,11 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { LOGIN } from '../graphql/mutations.js';
-import { useContext } from 'react';
-import { userContext } from '../App';
 
 
 export default function LoginPage() {
     const [error, setError] = useState();
     const [data, setData] = useState();
-    const loggedIn = useContext(userContext);
 
     const [mutate] = useMutation(LOGIN, {
         onError: (error) => {
@@ -22,7 +19,6 @@ export default function LoginPage() {
         onCompleted: (data) => {
             const { token } = data.login;
             localStorage.setItem('token', token);
-            loggedIn(token);
             setData(data);
             setError(null);
         }
