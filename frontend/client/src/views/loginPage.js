@@ -1,21 +1,86 @@
 import '../css/login-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useMutation } from '@apollo/client';
+import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { LOGIN } from '../graphql/mutations.js';
+import { useContext } from 'react';
+import { userContext } from '../App';
 
 
 export default function LoginPage() {
+    const [error, setError] = useState();
+    const [data, setData] = useState();
+    const loggedIn = useContext(userContext);
+
+    const [mutate] = useMutation(LOGIN, {
+        onError: (error) => {
+            setError(error.message);
+        },
+        onCompleted: (data) => {
+            const { token } = data.login;
+            localStorage.setItem('token', token);
+            loggedIn(token);
+            setData(data);
+            setError(null);
+        }
+
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            const response = await mutate({
+                variables: {
+                    email: e.target.elements.formBasicEmail.value,
+                    password: e.target.elements.formBasicPassword.value
+                }
+            });
+            if(response.data.login){
+                setError(null);
+            }
+        }
+        catch(err){
+            console.error('Mutation error:', err)
+        }
+        
+    }
+
+    const resetForm = () => {
+        document.getElementById('loginForm').reset();
+    }
+
     return (
-        <div id="page-content">
-            <div className="container">
-                <h1><b>Login</b></h1>
-                <div className="contact-form">
-                    <label htmlFor="email"><b>Email</b></label>
-                    <input type="email" id="email" name="email"/>
-                    <label htmlFor="password"><b>Password</b></label>
-                    <input type="text" id="password" name="password"/>
-                    <button type="submit" id="login-btn">LOG IN</button>
-                </div>
-            </div>
-        </div>
+        <Container>
+            <Form
+            onSubmit= {(e) => {
+                e.preventDefault();
+                handleSubmit(e);
+            }
+            } id='loginForm'
+            >
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" name='email' />
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" name='password' />
+                </Form.Group>
+                <Button type="submit" id="login-btn">
+                    Submit
+                </Button>
+                {error && <div className="alert alert-danger" role="alert">{error}</div>}
+                {/* contain the key inside the parent for the data.login.token */}
+                {data && <div className="alert alert-success" role="alert" style={{wordWrap: "break-word"}}><b>User logged in successfully, awarded access token :</b> {data.login.token}</div>}
+                {data && resetForm()}
+            </Form>
+        </Container>
     );
 }

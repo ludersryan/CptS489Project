@@ -2,7 +2,7 @@ import '../css/profile-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function profilePage() {
+export default function ProfilePage() {
     return (
         <div className="container">
 

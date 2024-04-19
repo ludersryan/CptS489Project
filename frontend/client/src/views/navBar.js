@@ -1,9 +1,27 @@
 import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
+
 
 export default function NavBar() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token){
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+    // logout function
+    const logout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+    }
+
 
   return (
     <>
@@ -32,10 +50,19 @@ export default function NavBar() {
                         <li className="nav-item">
                             <Link to = '/Legal' className="nav-link">LEGAL</Link>
                         </li>
-                        <div className = "btn-group" id="nav-btn-group">
-                            <Link to = '/login'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button></Link>
-                            <Link to = '/signup'><button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false">SIGN UP</button></Link>
-                        </div>
+                        {!isLoggedIn ? (
+                            <div className = "btn-group" id="nav-btn-group">
+                                <Link to = '/login'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button></Link>
+                                <Link to = '/signup'><button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false">SIGN UP</button></Link>
+                            </div>
+                        ) : (
+                            <div className = "btn-group" id="nav-btn-group">
+                                <Link to = '/profile'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">PROFILE</button></Link>
+                                <button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false" onClick={logout}>LOGOUT</button>
+                            </div>
+                        )}
+
+                        
                     </ul>
                     </div>
             </div>

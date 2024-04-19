@@ -1,8 +1,5 @@
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import { generateToken } from '../helpers/jwt.js'
 import loginResolver from '../resolvers/loginResolver.js'
 import signUpResolver from '../resolvers/signUpResolver.js'
 import { addPostResolver, updatePostResolver } from '../resolvers/postResolver.js'
@@ -102,15 +99,7 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 return User.findById(args.id);
             },
-        },
-        login: {
-            type: LoginResponseType,
-            args: {
-                email: {type: new GraphQLNonNull(GraphQLString)},
-                password: {type: new GraphQLNonNull(GraphQLString)},
-            },
-            resolve: loginResolver,
-        },
+        }
     }
 });
 
@@ -128,6 +117,14 @@ const mutation = new GraphQLObjectType({
                 dateCreated: {type: GraphQLString},
             },
             resolve: signUpResolver,
+        },
+        login: {
+            type: LoginResponseType,
+            args: {
+                email: {type: new GraphQLNonNull(GraphQLString)},
+                password: {type: new GraphQLNonNull(GraphQLString)},
+            },
+            resolve: loginResolver,
         },
         updateUser: {
             type: UserType,

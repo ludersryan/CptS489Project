@@ -28,10 +28,16 @@ export const verifyToken = (token) => {
     }
 };
 
-export const generateToken = (user) => {
+export const generateAccessToken = (user) => {
     return jwt.sign({ id: user.id, name: user.name }, private_key, {
         algorithm: 'RS256',
         expiresIn: 86400 // expires in 24 hours
     });
 }
 
+export const generateRefreshToken = (user) => {
+    return jwt.sign({ id: user.id, name: user.name }, private_key, {
+        algorithm: 'RS256',
+        expiresIn: 2592000 // expires in 30 days
+    });
+}

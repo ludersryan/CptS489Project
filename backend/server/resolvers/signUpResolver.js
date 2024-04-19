@@ -1,4 +1,3 @@
-import { generateToken } from '../helpers/jwt.js';
 import User from '../models/user.model.js';
 
 export default async function signUpResolver(parent, args){

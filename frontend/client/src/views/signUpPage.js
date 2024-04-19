@@ -2,19 +2,11 @@ import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
+import { ADD_USER } from '../graphql/mutations.js';
 
-const ADD_USER = gql`
-    mutation AddUser($name: String!, $email: String!, $password: String!) {
-        addUser(name: $name, email: $email, password: $password){
-            name
-            email
-            password
-        }
-    }
-`;
 
 
 
@@ -28,7 +20,7 @@ export default function SignUpPage() {
         }
     });
     
-    const handleClick = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         setData(null);
@@ -60,7 +52,7 @@ export default function SignUpPage() {
             <Form
                 onSubmit= {(e) => {
                     e.preventDefault();
-                    handleClick(e);
+                    handleSubmit(e);
                 }
                 } id='singUpForm'>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

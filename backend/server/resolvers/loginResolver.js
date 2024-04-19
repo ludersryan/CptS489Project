@@ -1,4 +1,4 @@
-import { generateToken } from '../helpers/jwt.js'
+import { generateAccessToken } from '../helpers/jwt.js'
 import User from '../models/user.model.js'
 
 export default async function loginResolver(parent, args){
@@ -16,7 +16,7 @@ export default async function loginResolver(parent, args){
             throw new Error('Invalid password');
         }
         
-        const token = generateToken(user);
+        const token = generateAccessToken(user);
         return {
             token: token,
             id: user._id.toString()
