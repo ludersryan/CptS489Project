@@ -6,8 +6,7 @@ import { generateToken } from '../helpers/jwt.js'
 import loginResolver from '../resolvers/loginResolver.js'
 import signUpResolver from '../resolvers/signUpResolver.js'
 import { addPostResolver, updatePostResolver } from '../resolvers/postResolver.js'
-import { updateUserResolver } from '../resolvers/updateUserResolver.js'
-
+import updateUserResolver from '../resolvers/updateUserResolver.js'
 import {
     GraphQLObjectType,
     GraphQLID,
