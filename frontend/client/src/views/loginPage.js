@@ -5,8 +5,18 @@ import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { LOGIN } from '../graphql/mutations.js';
 import { useNavigate } from 'react-router-dom';
+import { gql } from '@apollo/client';
+
+
+export const LOGIN = gql`
+    mutation login($email: String!, $password: String!) {
+        login(email: $email, password: $password){
+            token
+            id
+        }
+    }
+`;
 
 export default function LoginPage() {
     const [error, setError] = useState();
@@ -18,7 +28,9 @@ export default function LoginPage() {
         },
         onCompleted: (data) => {
             const { token } = data.login;
+            const { id } = data.login;
             localStorage.setItem('token', token);
+            localStorage.setItem('id', id);
             setData(data);
             setError(null);
             navigate('/');

@@ -5,10 +5,18 @@ import Form from 'react-bootstrap/Form';
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { ADD_USER } from '../graphql/mutations.js';
+import { gql } from '@apollo/client';
 
 
-
+export const ADD_USER = gql`
+    mutation AddUser($name: String!, $email: String!, $password: String!) {
+        addUser(name: $name, email: $email, password: $password){
+            name
+            email
+            password
+        }
+    }
+`;
 
 
 export default function SignUpPage() {

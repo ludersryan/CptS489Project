@@ -7,6 +7,7 @@ import LoginPage from "./views/loginPage"
 import SignUpPage from "./views/signUpPage";
 import CreateListingPage from "./views/createListingPage";
 import ProfilePage from "./views/profilePage";
+import WishList from "./views/wishListPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router";
 
@@ -27,6 +28,7 @@ export default function App() {
                     <Route path = "/signup" element={<SignUpPage/>}/>
                     <Route path = "/createListing" element={<CreateListingPage/>}/>
                     <Route path = "/profile" element={<ProfilePage/>}/>
+                    <Route path = "/wishlist" element={<WishList/>}/>
                 </Routes>
             <FooterBar/>
         </>

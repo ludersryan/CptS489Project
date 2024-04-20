@@ -26,6 +26,7 @@ export default function NavBar() {
     
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('id');
         setIsLoggedIn(false);
     }
     

@@ -1,8 +1,50 @@
 import '../css/wishlist-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useState } from 'react';
+
+
+
+// enter the user id of 66240ea7dd6bf32c45efaf54 to check wishlist
+
+export const GET_WISHLIST = gql`
+    query wishList($id: ID!) {
+        wishList(id: $id){
+            id
+            name
+            price
+            brand
+            condition
+            description
+            yearProduced
+            favorites
+        }
+    }
+`;
+
 
 export default function WishListPage() {
+    const [error, setError] = useState();
+    const [data, setData] = useState();
+    // run the query when the page is loaded
+
+    const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
+        variables: { id: '66240ea7dd6bf32c45efaf54' },
+        onError: (error) => {
+            setError(error.message);
+        },
+        onCompleted: (data) => {
+            setData(data);
+            setError(null);
+        }
+    });
+
+    
+
     return (
+
+        
         <div className="container">
 
         <h1 className="wishlist-title"><b>My Wishlist</b></h1>

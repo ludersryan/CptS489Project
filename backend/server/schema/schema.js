@@ -1,5 +1,6 @@
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
+import WishList from '../models/wishlist.model.js'
 import loginResolver from '../resolvers/loginResolver.js'
 import signUpResolver from '../resolvers/signUpResolver.js'
 import { addPostResolver, updatePostResolver } from '../resolvers/postResolver.js'
@@ -58,6 +59,16 @@ const LoginResponseType = new GraphQLObjectType({
     },
 });
 
+const WishListType = new GraphQLObjectType({
+    name: 'WishList',
+    fields: () => ({
+        postId: {type: GraphQLID},
+        userId: {type: GraphQLID},
+        dateAdded: {type: GraphQLString},
+    }),
+});
+
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -99,7 +110,17 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 return User.findById(args.id);
             },
-        }
+        },
+        // return all posts in a user's wishlist
+        wishList: {
+            type: new GraphQLList(PostType),
+            args: {userId: {type: GraphQLID}},
+            async resolve(parent, args){
+                const wishList = await WishList.find({ userId: args.userId })
+                    .populate('postId')
+                return wishList.map((wishList => wishList.postId));
+            },
+        },
     }
 });
 
@@ -213,7 +234,23 @@ const mutation = new GraphQLObjectType({
                 },
             },
             resolve: updatePostResolver,
-        }
+        },
+        // wishlist queries
+        addToWishList: {
+            type: WishListType,
+            args : {
+                userId: {type: new GraphQLNonNull(GraphQLID)},
+                postId: {type: new GraphQLNonNull(GraphQLID)},
+            },
+            resolve(parent, args){
+                const wishList = new WishList({
+                    userId: args.userId,
+                    postId: args.postId,
+                    dateAdded: new Date(),
+                });
+                return wishList.save();
+            },
+        },
     },
 });
 

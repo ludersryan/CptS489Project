@@ -11,10 +11,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+
 client.query({
   query: gql`
     query {
-      posts {
+      wishList(userId: "66240ea7dd6bf32c45efaf54") {
         id
         name
         brand

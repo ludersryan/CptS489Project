@@ -14,6 +14,7 @@ const userSchema = new Schema({
     },
     password: String,
     dateCreated: Date,
+    
 });
 
 
