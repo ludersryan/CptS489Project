@@ -1,0 +1,171 @@
+
+/* set default text */
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300..700&display=swap');
+
+body {
+  font-family: "Overpass Mono", monospace;
+  font-size: 15px;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+#global-top-nav{
+  padding: 15px;
+}
+/* Styles for the navbar */
+#global-search-button {
+  color: black;
+  background-color: transparent;
+  border-color: grey;
+  border-radius: 0;
+  font-size: 15px;
+}
+#global-search-button:hover {
+  color: black;
+  border-color: black;
+}
+
+#global-login-button{
+    color: black;
+    background-color: transparent;
+    border-color: grey;
+    border-radius: 0;
+    font-size: 15px;
+}
+#global-login-button:hover{
+    color: blue;
+    background-color: transparent;
+    border-color: black;
+} 
+#global-signup-button{
+    color: white;
+    background-color: black;
+    border-color: black;
+    border-radius: 0;
+    font-size: 15px;
+    padding: 5px;
+}
+#global-signup-button:hover{
+    color: blue;
+    background-color: rgb(61, 61, 61);
+}
+
+#global-sell-button{
+    color: black;
+    background-color: transparent;
+    border-color: grey;
+    border-radius: 0;
+    font-size: 15px;
+}
+#global-sell-button:hover{
+    color: blue;
+    background-color: transparent;
+    border-color: black;
+}
+
+.me-2{
+    border-radius: 0;
+    border-color: black;
+}
+
+.nav-link{
+  color: black;
+}
+.nav-link:hover{
+  color:blue;
+}
+#navbar-div li{
+  padding: 0 15px;
+}
+#global-lower-nav{
+  border-top: 1px solid grey;
+}
+
+/* Landing page styles */
+
+#global-landing-div{
+  padding: 0;
+}
+#global-lower-nav-list li{
+  padding: 0 15px;
+}
+
+
+#landing-col{
+  padding: 15px;
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  margin-bottom: 10em;
+}
+
+#landing-col video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+#landing-text h1{
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+
+#landing-text p{
+  color: white;
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#landing-button{
+  padding: 10px 20px;
+  color: white;
+  background-color: transparent;
+  border-color: white;
+  border-radius: 0;
+  font-size: 1.5em;
+}
+
+#landing-button:hover{
+  background-color: blue;
+  border-color: blue;
+}
+
+#global-feature-div{
+  padding: 15px;
+  margin-bottom: 10em;
+
+}
+#brand-card-group{
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10em;
+}
+.card{
+  width: 300px;
+  height: 300px;
+}
+
+/*  make the image the same size */
+.card img{
+  object-fit:cover;
+  height: inherit;
+  overflow: hidden;
+
+}
+.card:hover{
+  box-shadow: 0 0 1px 1px grey;
+}
