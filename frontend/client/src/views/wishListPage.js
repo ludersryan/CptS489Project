@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 
 
 // enter the user id of 66240ea7dd6bf32c45efaf54 to check wishlist
@@ -28,17 +28,38 @@ export default function WishListPage() {
     const [error, setError] = useState();
     const [data, setData] = useState();
     // run the query when the page is loaded
+    // const [hasId, setHasId] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
+    const checkToken = () => {
+        const token = localStorage.getItem('id');
+        setIsLoggedIn(!!token);
+    }
+    
+    /*
+    useEffect(() => { // Effect for checking login token / status
+        checkToken();
+        window.addEventListener('storage', checkToken); // Set up an event listener
+        return () => {
+            window.removeEventListener('storage', checkToken); // Clean up the event listener 
+        }
+    }, []);
+    */
 
     const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
         //variables: { userId: '66240ea7dd6bf32c45efaf54' }, // This is hardcoded for now I think... change it to signed-in user's number '66240ea7dd6bf32c45efaf54'.
-        variables: { userId: ("66240ea7dd6bf32c45efaf54")},
+        // variables: { userId: ("66240ea7dd6bf32c45efaf54")},
+        variables: { userId: (localStorage.getItem('id')) },
+        // console.log(localStorage.getItem('id'))
+
+        
         // variables: { userId: localStorage.getItem(connect.sid)}, // ? Why not this? // id vs userId.?
         // Is it connect.sid ? That has value 's%3AS2TEI1YdWFAl-NXFufQrXxRT_n12oCeC.pa%2FaAikzDs5b%2BPOzsTRyC8jZEniS5mD3pc2ysg8tDGE'....
-
+        
         onError: (error) => {
             setError(error.message);
         },
-        onCompleted: (data) => {
+        onCompleted: (data) => { 
             setData(data);
             setError(null);
         }
@@ -46,8 +67,8 @@ export default function WishListPage() {
 
     return ( // Return loops, I believe, unless my computer lied to me....
         <div className="container">
-            <h1 className="wishlist-title"><b>My Wishlist</b></h1>
-            {loading && <p>Loading...</p>}
+            <h1 className="wishlist-title"><b>My Wishlist</b></h1> 
+            {loading && <p>Loading...</p>} 
             {error && <p>Error: {error}</p>}
             {data && data.wishList && (
                 <table className="wishlist-table">
@@ -63,9 +84,10 @@ export default function WishListPage() {
                     <tbody>
                         {data.wishList.map(item => (
                             <tr key={item.id}>
+                                <img src={require(`../images/Fender.jpg`)} alt={"->"} />
                                 <td>
                                     <img src={`../images/${item.image}`} alt={"->"} />
-                                    <span>{item.name}</span>
+                                    <Link to = '/'><span>{item.name}</span></Link>
                                 </td>
                                 <td>${item.price}</td>
                                 <td>{item.condition}</td>

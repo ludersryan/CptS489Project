@@ -42,7 +42,7 @@ export default function SignUpPage() {
             });
             if(response.data.addUser){
                 setData(response.data);
-                setError(null);
+                setError(null); 
             }
 
         } catch(err){
