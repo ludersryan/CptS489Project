@@ -23,7 +23,101 @@ export const GET_WISHLIST = gql`
     }
 `;
 
+export default function WishListPage() {
+    const [error, setError] = useState();
+    const [data, setData] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
+    const checkToken = () => {
+        const token = localStorage.getItem('id');
+        setIsLoggedIn(!!token);
+    }
+    
+    const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
+        variables: { userId: localStorage.getItem('id') },
+        onError: (error) => {
+            setError(error.message);
+        },
+        onCompleted: (data) => { 
+            setData(data);
+            setError(null);
+        }
+    });
 
+    /*
+    useEffect(() => { // Effect for checking login token / status
+        checkToken();
+        window.addEventListener('storage', checkToken); // Set up an event listener
+        return () => {
+            window.removeEventListener('storage', checkToken); // Clean up the event listener 
+        }
+    }, []);
+    */
+
+    // Function to render image based on item's brand
+    const renderItemImage = (brand) => {
+        console.log("Brand:", brand);
+        switch (brand) {
+            case 'Fender':
+                return '../images/Fender.jpg';
+            case 'Yamaha':
+                return '../images/yamaha.jpg';
+            case 'Pearl':
+                return '../images/pearl.jpg';
+            case 'Gibson':
+                return '../images/gibson.jpg';
+            // Add more cases for other brands here
+
+            default:
+                return '../images/unknownBrand.jpg'; // Return string w/ unknown brand image for unrecognized brands.
+        }
+    }
+
+    return (
+        <div className="container">
+            <h1 className="wishlist-title"><b>My Wishlist</b></h1> 
+            {loading && <p>Loading...</p>} 
+            {error && <p>Error: {error}</p>}
+            {data && data.wishList && (
+                <table className="wishlist-table">
+                    <thead>
+                        <tr>
+                            <th>Product name</th>
+                            <th>Price</th>
+                            <th>Condition</th>
+                            <th>Description</th>
+                            <th>Year Produced</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                
+                        {data.wishList.map(item => (
+                            <tr key={item.id}>
+
+                                <td>
+                                    {/* Render image based on brand */}
+                                    <img src={renderItemImage(item.brand)} style={{ width: '62px', height: '62px' }} />  
+                                    <Link to="/">{item.name}</Link>
+                                </td>
+                                {/* Render other table cells now */}
+
+                                {/* <img src={require(`../images/Fender.jpg`)} alt={"->"} /> */}
+
+                                <td>${item.price}</td>
+                                <td>{item.condition}</td>
+                                <td>{item.description}</td>
+                                <td>{item.yearProduced}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
+    );
+}
+
+
+/*
 export default function WishListPage() {
     const [error, setError] = useState();
     const [data, setData] = useState();
@@ -36,15 +130,7 @@ export default function WishListPage() {
         setIsLoggedIn(!!token);
     }
     
-    /*
-    useEffect(() => { // Effect for checking login token / status
-        checkToken();
-        window.addEventListener('storage', checkToken); // Set up an event listener
-        return () => {
-            window.removeEventListener('storage', checkToken); // Clean up the event listener 
-        }
-    }, []);
-    */
+    
 
     const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
         //variables: { userId: '66240ea7dd6bf32c45efaf54' }, // This is hardcoded for now I think... change it to signed-in user's number '66240ea7dd6bf32c45efaf54'.
