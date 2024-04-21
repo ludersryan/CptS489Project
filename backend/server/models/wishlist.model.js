@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 const Schema = mongoose.Schema;
 
 
@@ -15,7 +16,8 @@ const wishListSchema = new Schema({
     },
 });
 
-
+// Compound index to ensure that a user can only have one wishlist item per post
+wishListSchema.index({userId: 1, postId: 1}, {unique: true});
 
 var WishList = mongoose.model('wishlist', wishListSchema);
 export default WishList;

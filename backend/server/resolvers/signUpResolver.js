@@ -1,5 +1,6 @@
 import User from '../models/user.model.js';
 
+
 export default async function signUpResolver(parent, args){
     try{
         if (!args.email || !args.password || !args.name){
@@ -13,7 +14,12 @@ export default async function signUpResolver(parent, args){
             name: args.name,
             email: args.email,
             password: args.password,
-            dateCreated: new Date()
+            dateCreated: new Date(),
+            totalListings: 0,
+            itemsSold: 0,
+            itemsBought: 0,
+            avgRating: 0,
+            aboutMe: '',
         });
         await newUser.save();
         return {

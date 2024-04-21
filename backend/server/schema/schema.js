@@ -5,6 +5,8 @@ import loginResolver from '../resolvers/loginResolver.js'
 import signUpResolver from '../resolvers/signUpResolver.js'
 import { addPostResolver, updatePostResolver } from '../resolvers/postResolver.js'
 import updateUserResolver from '../resolvers/updateUserResolver.js'
+import { addToWishListResolver, removeFromWishListResolver } from '../resolvers/wishListResolver.js'
+
 import {
     GraphQLObjectType,
     GraphQLID,
@@ -48,6 +50,18 @@ const UserType = new GraphQLObjectType({
         email: {type: GraphQLString},
         password: {type: GraphQLString},
         dateCreated: {type: GraphQLString},
+        totalListings: {type: GraphQLInt},
+        itemsSold: {type: GraphQLInt},
+        itemsBought: {type: GraphQLInt},
+        avgRating: {type: GraphQLFloat},
+        aboutMe: {type: GraphQLString},
+        posts: {
+            type: new GraphQLList(PostType),
+            resolve(parent, args){
+                return Post.find({userId: parent.id});
+            },
+        },
+
     }),
 });
 
@@ -116,9 +130,15 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(PostType),
             args: {userId: {type: GraphQLID}},
             async resolve(parent, args){
-                const wishList = await WishList.find({ userId: args.userId })
+                try{
+                    const wishList = await WishList.find({ userId: args.userId })
                     .populate('postId')
-                return wishList.map((wishList => wishList.postId));
+                    .exec();
+                    return wishList.map((wishList => wishList.postId));
+                } catch(err){
+                    throw new Error('Failed to retrieve wishlist: ' + err.message);
+                }
+                
             },
         },
     }
@@ -136,6 +156,11 @@ const mutation = new GraphQLObjectType({
                 email: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
                 dateCreated: {type: GraphQLString},
+                totalListings: {type: GraphQLInt},
+                itemsSold: {type: GraphQLInt},
+                itemsBought: {type: GraphQLInt},
+                avgRating: {type: GraphQLFloat},
+                aboutMe: {type: GraphQLString},
             },
             resolve: signUpResolver,
         },
@@ -155,6 +180,11 @@ const mutation = new GraphQLObjectType({
                 email: {type: GraphQLString},
                 password: {type: GraphQLString},
                 dateCreated: {type: GraphQLString},
+                totalListings: {type: GraphQLInt},
+                itemsSold: {type: GraphQLInt},
+                itemsBought: {type: GraphQLInt},
+                avgRating: {type: GraphQLFloat},
+                aboutMe: {type: GraphQLString},
             },
             resolve: updateUserResolver,
         },
@@ -242,14 +272,15 @@ const mutation = new GraphQLObjectType({
                 userId: {type: new GraphQLNonNull(GraphQLID)},
                 postId: {type: new GraphQLNonNull(GraphQLID)},
             },
-            resolve(parent, args){
-                const wishList = new WishList({
-                    userId: args.userId,
-                    postId: args.postId,
-                    dateAdded: new Date(),
-                });
-                return wishList.save();
+            resolve: addToWishListResolver,
+        },
+        removeFromWishList: {
+            type: WishListType,
+            args : {
+                userId: {type: new GraphQLNonNull(GraphQLID)},
+                postId: {type: new GraphQLNonNull(GraphQLID)},
             },
+            resolve: removeFromWishListResolver,
         },
     },
 });

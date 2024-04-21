@@ -5,37 +5,6 @@ import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Row, Col } from 'react-bootstrap';
 
-// // post queries
-// addPost: {
-//     type: PostType,
-//     args : {
-//         name: {type: new GraphQLNonNull(GraphQLString)},
-//         description: {type:GraphQLString},
-//         brand: {type: new GraphQLNonNull(GraphQLString)},
-//         yearProduced: {type: GraphQLString},
-//         price: {type: new GraphQLNonNull(GraphQLFloat)},
-//         favorites: {
-//             type: GraphQLInt,
-//             defaultValue: 0
-//         },
-//         condition: {
-//             type: new GraphQLEnumType({
-//                 name: 'PostCondition',
-//                 values :{
-//                     'Mint': {value: 'Mint'},
-//                     'Excellent': {value: 'Excellent'},
-//                     'Good': {value: 'Good'},
-//                     'Fair': {value: 'Fair'},
-//                     'Poor': {value: 'Poor'},
-//                     'Parts': {value: 'For parts or not working'},
-//                 }
-//             }),
-//             defaultValue: 'N/A',
-//         },
-//         userId: {type: new GraphQLNonNull(GraphQLID)},
-//     },
-//     resolve : addPostResolver,
-// },
 
 export const ADD_POST = gql`
     mutation AddPost($name: String!, $brand: String!, $yearProduced: Date, $description: String, $favorites: Int, $price: Float, $condition: String, $userId: ID!) {
@@ -127,6 +96,8 @@ export default function CreateListingPage() {
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </Form>
             </Col>
+            {error && <div className="alert alert-danger" role="alert">{error}</div>}
+            {data && <div className="alert alert-success" role="alert">User created successfully</div>}
         </Row>
     </Container>
   );

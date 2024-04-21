@@ -8,6 +8,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     name: String,
+    totalListings: Number,
+    itemsSold: Number,
+    itemsBought: Number,
+    avgRating: Number,
+    aboutMe: String,
     email: {
         type: String,
         validate: [validator.isEmail, 'invalid email']

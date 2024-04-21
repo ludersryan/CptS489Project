@@ -1,5 +1,6 @@
 import Post from '../models/post.model.js';
 import { verifyToken } from '../helpers/jwt.js';
+import User from '../models/user.model.js';
 
 export async function updatePostResolver(parent, args, context){
     try{
@@ -13,21 +14,22 @@ export async function updatePostResolver(parent, args, context){
         if(post.userId.toString() !== user.id){
             throw new Error('Unauthorized');
         }
-        return Post.findByIdAndUpdate(
-            args.id,
-            {
-                $set: {
-                    name: args.name,
-                    description: args.description,
-                    condition: args.condition,
-                    price: args.price,
-                    favorites: args.favorites,
-                    brand: args.brand,
-                    yearProduced: args.yearProduced,
-                },
-            },
-            { new : true }
-        );
+
+        let updatePostFields = {};
+        if (args.name !== undefined) updatePostFields.name = args.name;
+        if (args.description !== undefined) updatePostFields.description = args.description;
+        if (args.condition !== undefined) updatePostFields.condition = args.condition;
+        if (args.price !== undefined) updatePostFields.price = args.price;
+        if (args.favorites !== undefined) updatePostFields.favorites = args.favorites;
+        if (args.brand !== undefined) updatePostFields.brand = args.brand;
+        if (args.yearProduced !== undefined) updatePostFields.yearProduced = args.yearProduced;
+
+        if (Object.keys(updatePostFields).length === 0){
+            throw new Error('No fields to update');
+        }
+        else{
+            return Post.findByIdAndUpdate(args.id, {$set: updatePostFields}, {new: true});
+        }
     }
     catch(err){
         throw new Error(err.message);
@@ -37,23 +39,44 @@ export async function updatePostResolver(parent, args, context){
 export async function addPostResolver(parent, args, context){
     try{
         console.log(context.req.headers['authorization']);
-        const user = await verifyToken(context.req.headers['authorization']);
-        
-        const newPost = new Post({
-            name: args.name,
-            brand: args.brand,
-            yearProduced: args.yearProduced,
-            description: args.description,
-            condition: args.condition,
-            favorites: args.favorites || 0,
-            price: args.price,
-            userId: user.id,
-        });
-        await newPost.save();
-        return {
-            name: newPost.name,
-            id: newPost._id,
+        const token = await verifyToken(context.req.headers['authorization']);
+        const userId = context.req.headers['userId'];
+
+        if(!token){
+            throw new Error('Unauthorized');
         }
+
+        if(User.findById(userId) === null || User.findById(userId) === undefined){
+            throw new Error('User not found');
+        }
+        
+        let newPostFields = {};
+        if (!args.name || !args.brand || !args.price){
+            throw new Error('Please provide name, brand, and price');
+        }
+        
+
+        if (args.price < 0){
+            throw new Error('Price cannot be negative');
+        }
+
+        // check the date is in the correct format
+        if (args.yearProduced !== undefined){
+            if (args.yearProduced < 0){
+                throw new Error('Year produced cannot be negative');
+            }
+        }
+
+        newPostFields.name = args.name;
+        newPostFields.brand = args.brand;
+        newPostFields.price = args.price;
+        if (args.yearProduced !== undefined) newPostFields.yearProduced = args.yearProduced;
+        if (args.description !== undefined) newPostFields.description = args.description;
+        if (args.condition !== undefined) newPostFields.condition = args.condition;
+
+        const newPost = new Post(newPostFields);
+        await newPost.save();
+        return newPost;
     }
     catch(err){
         throw new Error(err.message);
