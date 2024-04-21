@@ -9,8 +9,8 @@ import { useState } from 'react';
 // enter the user id of 66240ea7dd6bf32c45efaf54 to check wishlist
 
 export const GET_WISHLIST = gql` 
-    query wishList($id: ID!) {
-        wishList(id: $id){
+    query wishList($userId: ID!) {
+        wishList(userId: $userId){
             id
             name
             price
@@ -30,9 +30,10 @@ export default function WishListPage() {
     // run the query when the page is loaded
 
     const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
-        variables: { userId: '66240ea7dd6bf32c45efaf54' }, // This is hardcoded for now I think...? Right?
-        
-        // variables: { id: localStorage.getItem(id)} // ? Why not this?
+        //variables: { userId: '66240ea7dd6bf32c45efaf54' }, // This is hardcoded for now I think... change it to signed-in user's number '66240ea7dd6bf32c45efaf54'.
+        variables: { userId: ("66240ea7dd6bf32c45efaf54")},
+        // variables: { userId: localStorage.getItem(connect.sid)}, // ? Why not this? // id vs userId.?
+        // Is it connect.sid ? That has value 's%3AS2TEI1YdWFAl-NXFufQrXxRT_n12oCeC.pa%2FaAikzDs5b%2BPOzsTRyC8jZEniS5mD3pc2ysg8tDGE'....
 
         onError: (error) => {
             setError(error.message);
@@ -43,7 +44,7 @@ export default function WishListPage() {
         }
     });
 
-    return (
+    return ( // Return loops, I believe, unless my computer lied to me....
         <div className="container">
             <h1 className="wishlist-title"><b>My Wishlist</b></h1>
             {loading && <p>Loading...</p>}
@@ -54,22 +55,22 @@ export default function WishListPage() {
                         <tr>
                             <th>Product name</th>
                             <th>Price</th>
-                            <th>User</th>
-                            <th>Stock</th>
-                            <th>Added Date</th>
+                            <th>Condition</th>
+                            <th>Description</th>
+                            <th>Year Produced</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.wishList.map(item => (
-                            <tr key={item.userId}>
+                            <tr key={item.id}>
                                 <td>
-                                    <img src={`../images/${item.image}`} alt={item.name} />
+                                    <img src={`../images/${item.image}`} alt={"->"} />
                                     <span>{item.name}</span>
                                 </td>
                                 <td>${item.price}</td>
-                                <td>{item.user}</td>
-                                <td>{item.stock}</td>
-                                <td>{item.addedDate}</td>
+                                <td>{item.condition}</td>
+                                <td>{item.description}</td>
+                                <td>{item.yearProduced}</td>
                             </tr>
                         ))}
                     </tbody>
