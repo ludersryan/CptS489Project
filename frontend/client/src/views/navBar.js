@@ -60,6 +60,11 @@ export default function NavBar() {
                         <li className="nav-item">
                             <Link to = '/Legal' className="nav-link">LEGAL</Link>
                         </li>
+                        {isLoggedIn && (
+                            <li className="nav-item">
+                                <Link to = '/wishlist' className="nav-link">WISHLIST</Link>
+                            </li>
+                        )}
                         {!isLoggedIn ? (
                             <div className = "btn-group" id="nav-btn-group">
                                 <Link to = '/login'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button></Link>
@@ -68,7 +73,8 @@ export default function NavBar() {
                         ) : (
                             <div className = "btn-group" id="nav-btn-group">
                                 <Link to = '/profile'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">PROFILE</button></Link>
-                                <button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false" onClick={logout}>LOGOUT</button>
+                                <button className="btn btn-outline-primary me-4" id="global-signup-button" aria-pressed="false" onClick={logout}>LOGOUT</button>
+                                
                             </div>
                         )}
 

@@ -64,7 +64,7 @@ export default function WishListPage() {
                         {data.wishList.map(item => (
                             <tr key={item.id}>
                                 <td>
-                                    <img src={`../images/${item.image}`} alt={"->"} />
+                                    <img src = {require('../images/Fender.jpg')} alt="Item 1"/>
                                     <span>{item.name}</span>
                                 </td>
                                 <td>${item.price}</td>
