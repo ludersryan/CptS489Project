@@ -7,7 +7,7 @@ export async function addToWishListResolver(parent, args, context){
     try{
         console.log(context.req.headers['authorization']);
         const token = await verifyToken(context.req.headers['authorization']);
-        const userId = args.userId;
+        const userId = context.req.headers['userid'];
 
         if(!token){
             throw new Error('Unauthorized');
@@ -40,14 +40,13 @@ export async function removeFromWishListResolver(parent, args, context){
         console.log(context.req.headers['authorization']);
         const user = await verifyToken(context.req.headers['authorization']);
         
-        const wishList = await WishList.findOne({userId: user.id, postId: args.postId});
-        if(!wishList){
+        const result = await WishList.deleteOne({ userId: user.id, postId: args.postId })
+        if(result.deletedCount === 0){
             throw new Error('WishList not found');
         }
-        await wishList.delete();
         return {
-            userId: wishList.userId,
-            productId: wishList.productId,
+            userId: user.id,
+            productId: args.postId,
         }
     }
     catch(err){

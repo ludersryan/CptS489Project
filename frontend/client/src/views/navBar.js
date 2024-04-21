@@ -4,36 +4,12 @@ import { useEffect } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import UserContext from '../auth/userContext';
+import { useContext } from 'react';
 
 
 export default function NavBar() {
-
-
-    // need to add something like useContext to check if a user is logged in throughout the nodes
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
-    const checkToken = () => {
-        const token = localStorage.getItem('token');
-        setIsLoggedIn(!!token);
-    }
-    
-    useEffect(() => { // Effect for checking login token / status
-        checkToken();
-        window.addEventListener('storage', checkToken); // Set up an event listener
-        return () => {
-            window.removeEventListener('storage', checkToken); // Clean up the event listener 
-        }
-    }, []);
-    
-    const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('id');
-        setIsLoggedIn(false);
-    }
-    
-
-
-
+    const { user, logout } = useContext(UserContext);
   return (
     <>
         <nav className="navbar navbar-expand-lg bg-body-tertiary" id="global-top-nav">
@@ -61,12 +37,12 @@ export default function NavBar() {
                         <li className="nav-item">
                             <Link to = '/Legal' className="nav-link">LEGAL</Link>
                         </li>
-                        {isLoggedIn && (
+                        {user && (
                             <li className="nav-item">
                                 <Link to = '/wishlist' className="nav-link">WISHLIST</Link>
                             </li>
                         )}
-                        {!isLoggedIn ? (
+                        {!user ? (
                             <div className = "btn-group" id="nav-btn-group">
                                 <Link to = '/login'><button className="btn btn-outline-primary me-4" id="global-login-button" aria-pressed="false">LOGIN</button></Link>
                                 <Link to = '/signup'><button className="btn btn-outline-primary" id="global-signup-button" aria-pressed="false">SIGN UP</button></Link>

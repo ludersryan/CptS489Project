@@ -3,39 +3,42 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql, createHttpLink } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from './auth/userProvider';
+import { setContext } from '@apollo/client/link/context';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql',
-  cache: new InMemoryCache()
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:5000/graphql'
 });
 
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('id');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+      userId: userId ? userId : ""
+    }
+  }
+});
 
-// client.query({
-//   query: gql`
-//     query {
-//       wishList(userId: "66240ea7dd6bf32c45efaf54") {
-//         id
-//         name
-//         brand
-//         yearProduced
-//         description
-//         price
-//         favorites
-//         condition
-//       }
-//     }
-//   `
-// }).then(result => console.log(result));
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <ApolloProvider client={client}>
       <React.StrictMode>
-        <BrowserRouter>
-          <App/>
-        </BrowserRouter>
+        <UserProvider>
+          <BrowserRouter>
+            <App/>
+          </BrowserRouter>
+        </UserProvider>
       </React.StrictMode>
     </ApolloProvider>
 );

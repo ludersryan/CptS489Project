@@ -38,17 +38,20 @@ export async function updatePostResolver(parent, args, context){
 
 export async function addPostResolver(parent, args, context){
     try{
-        console.log(context.req.headers['authorization']);
         const token = await verifyToken(context.req.headers['authorization']);
-        const userId = context.req.headers['userId'];
+        const userId = context.req.headers['userid'];
+        console.log(userId);
 
         if(!token){
             throw new Error('Unauthorized');
         }
 
-        if(User.findById(userId) === null || User.findById(userId) === undefined){
+        const user = await User.findById(userId);
+
+        if(!user){
             throw new Error('User not found');
         }
+
         
         let newPostFields = {};
         if (!args.name || !args.brand || !args.price){
@@ -67,16 +70,30 @@ export async function addPostResolver(parent, args, context){
             }
         }
 
-        newPostFields.name = args.name;
-        newPostFields.brand = args.brand;
-        newPostFields.price = args.price;
-        if (args.yearProduced !== undefined) newPostFields.yearProduced = args.yearProduced;
-        if (args.description !== undefined) newPostFields.description = args.description;
-        if (args.condition !== undefined) newPostFields.condition = args.condition;
+        newPostFields = {
+            name: args.name,
+            description: args.description || '',
+            condition: args.condition || 'None',
+            price: args.price,
+            favorites: 0,
+            userId: user._id,
+            brand: args.brand,
+            yearProduced: args.yearProduced || '01/01/0001',
+        };
 
         const newPost = new Post(newPostFields);
         await newPost.save();
         return newPost;
+    }
+    catch(err){
+        console.error('Error in addPostResolver', err);
+        throw new Error(err.message);
+    }
+}
+
+export async function searchPostsResolver(parent, args){
+    try{
+        return Post.find(args);
     }
     catch(err){
         throw new Error(err.message);

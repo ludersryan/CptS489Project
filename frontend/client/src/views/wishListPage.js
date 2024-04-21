@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { useState } from 'react';
+import { useContext } from 'react';
+import UserContext from '../auth/userContext';
+import { useMutation } from '@apollo/client';
 
 
 
@@ -24,30 +27,73 @@ export const GET_WISHLIST = gql`
 `;
 
 
+export const REMOVE_WISHLIST = gql`
+    mutation RemoveFromWishList($userId: ID!, $postId: ID!) {
+        removeFromWishList(userId: $userId, postId: $postId){
+            userId
+            postId
+        }
+    }
+`;
+
+
 export default function WishListPage() {
+    const { user } = useContext(UserContext);
+
     const [error, setError] = useState();
     const [data, setData] = useState();
-    const {isEmpty, setIsEmpty} = useState(true);
-    // run the query when the page is loaded
-    const userId = localStorage.getItem('id');
-    console.log(userId);
+    const [removeData, setRemoveData] = useState();
+    
+    const userId = user ? user.id : null;
 
     const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
-        variables: { userId: localStorage.getItem('id')},
-        // variables: { userId: localStorage.getItem(connect.sid)}, // ? Why not this? // id vs userId.?
-        // Is it connect.sid ? That has value 's%3AS2TEI1YdWFAl-NXFufQrXxRT_n12oCeC.pa%2FaAikzDs5b%2BPOzsTRyC8jZEniS5mD3pc2ysg8tDGE'....
+        variables: { userId: userId},
         onError: (error) => {
             setError(error.message);
         },
         onCompleted: (data) => {
-            if(data.wishList){
-                setIsEmpty(false);
             setData(data);
             setError(null);
         }
-    }
-    });
     
+    });
+
+
+
+    const [mutate] = useMutation(REMOVE_WISHLIST, {
+        onError: (error) => {
+            setError(error.message);
+        },
+        onCompleted: (data) => {
+            setRemoveData(data);
+            setError(null);
+        },
+        refetchQueries: () => [{
+            query: GET_WISHLIST,
+            variables: { userId: userId }
+        }]
+    });
+
+    const handleSubmit = async (e, postId) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try{
+            const response = await mutate({
+                variables: {
+                    userId: userId,
+                    postId: postId
+                }
+            });
+            if(response.data.removeFromWishList){
+                setRemoveData(response.data);
+                setError(null);
+            }
+        }
+        catch(err){
+            console.error('Mutation error:', err)
+        }
+    }
+
 
     return ( // Return loops, I believe, unless my computer lied to me....
         <div className="container">
@@ -66,18 +112,19 @@ export default function WishListPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.wishList.map(item => (
+                        {console.log(data.wishList)}
+                        {data.wishList.map((item) => (
                             <tr key={item.id}>
-                                <td>
-                                    <img src = {require('../images/Fender.jpg')} alt="Item 1"/>
-                                    <span>{item.name}</span>
-                                </td>
-                                <td>${item.price}</td>
+                                <td>{item.name}</td>
+                                <td>{item.price}</td>
                                 <td>{item.condition}</td>
                                 <td>{item.description}</td>
                                 <td>{item.yearProduced}</td>
+                                <td><button onClick={(e) => handleSubmit(e, item.id)}>Remove</button></td>
                             </tr>
                         ))}
+
+
                     </tbody>
                 </table>
             )}

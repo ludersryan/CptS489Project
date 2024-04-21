@@ -3,7 +3,7 @@ import Post from '../models/post.model.js'
 import WishList from '../models/wishlist.model.js'
 import loginResolver from '../resolvers/loginResolver.js'
 import signUpResolver from '../resolvers/signUpResolver.js'
-import { addPostResolver, updatePostResolver } from '../resolvers/postResolver.js'
+import { addPostResolver, updatePostResolver, searchPostsResolver } from '../resolvers/postResolver.js'
 import updateUserResolver from '../resolvers/updateUserResolver.js'
 import { addToWishListResolver, removeFromWishListResolver } from '../resolvers/wishListResolver.js'
 
@@ -82,6 +82,20 @@ const WishListType = new GraphQLObjectType({
     }),
 });
 
+const PostConditionEnum = new GraphQLEnumType({
+    name: 'PostCondition',
+    values :{
+        'Mint': {value: 'Mint'},
+        'Excellent': {value: 'Excellent'},
+        'Good': {value: 'Good'},
+        'Fair': {value: 'Fair'},
+        'Poor': {value: 'Poor'},
+        'Parts': {value: 'For parts or not working'},
+        'None': {value: 'None'},
+    }
+});
+
+
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -108,9 +122,7 @@ const RootQuery = new GraphQLObjectType({
                 price: {type: GraphQLFloat},
                 yearProduced: {type: GraphQLString},
             },
-            resolve(parent, args){
-                return Post.find(args);
-            },
+            resolve: searchPostsResolver,
         },
         users: {
             type: new GraphQLList(UserType),
@@ -138,7 +150,6 @@ const RootQuery = new GraphQLObjectType({
                 } catch(err){
                     throw new Error('Failed to retrieve wishlist: ' + err.message);
                 }
-                
             },
         },
     }
@@ -212,18 +223,8 @@ const mutation = new GraphQLObjectType({
                     defaultValue: 0
                 },
                 condition: {
-                    type: new GraphQLEnumType({
-                        name: 'PostCondition',
-                        values :{
-                            'Mint': {value: 'Mint'},
-                            'Excellent': {value: 'Excellent'},
-                            'Good': {value: 'Good'},
-                            'Fair': {value: 'Fair'},
-                            'Poor': {value: 'Poor'},
-                            'Parts': {value: 'For parts or not working'},
-                        }
-                    }),
-                    defaultValue: 'N/A',
+                    type: PostConditionEnum,
+                    defaultValue: 'None'
                 },
                 userId: {type: new GraphQLNonNull(GraphQLID)},
             },
@@ -250,17 +251,8 @@ const mutation = new GraphQLObjectType({
                 price: {type: GraphQLFloat},
                 favorites: {type: GraphQLInt},
                 condition: {
-                    type: new GraphQLEnumType({
-                        name: 'PostConditionUpdate',
-                        values :{
-                            'Mint': {value: 'Mint'},
-                            'Excellent': {value: 'Excellent'},
-                            'Good': {value: 'Good'},
-                            'Fair': {value: 'Fair'},
-                            'Poor': {value: 'Poor'},
-                            'Parts': {value: 'For parts or not working'},
-                        }
-                    }),
+                    type: PostConditionEnum,
+                    defaultValue: 'None'
                 },
             },
             resolve: updatePostResolver,

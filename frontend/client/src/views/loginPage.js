@@ -1,12 +1,14 @@
 import '../css/login-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { gql } from '@apollo/client';
+import UserContext from '../auth/userContext';
+
 
 
 export const LOGIN = gql`
@@ -19,22 +21,21 @@ export const LOGIN = gql`
 `;
 
 export default function LoginPage() {
+
+    const { user, login } = useContext(UserContext);
     const [error, setError] = useState();
     const [data, setData] = useState();
+
     const navigate = useNavigate();
+
+
     const [mutate] = useMutation(LOGIN, {
         onError: (error) => {
             setError(error.message);
         },
         onCompleted: (data) => {
-            const { token } = data.login;
-            const { id } = data.login;
-            localStorage.setItem('token', token);
-            localStorage.setItem('id', id);
-            setData(data);
-            setError(null);
-            navigate('/');
-            window.dispatchEvent(new Event('storage')); // Trigger the event listener (using local storage, another way ?)
+            login(data.login.token, data.login.id);
+            navigate('/'); // redirect to home page
         }
 
     });
@@ -66,13 +67,7 @@ export default function LoginPage() {
 
     return (
         <Container>
-            <Form
-            onSubmit= {(e) => {
-                e.preventDefault();
-                handleSubmit(e);
-            }
-            } id='loginForm'
-            >
+            <Form onSubmit= {(e) => {handleSubmit(e);}} id='loginForm'>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" name='email' />
