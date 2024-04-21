@@ -27,22 +27,27 @@ export const GET_WISHLIST = gql`
 export default function WishListPage() {
     const [error, setError] = useState();
     const [data, setData] = useState();
+    const {isEmpty, setIsEmpty} = useState(true);
     // run the query when the page is loaded
+    const userId = localStorage.getItem('id');
+    console.log(userId);
 
     const { loading, data: wishListData } = useQuery(GET_WISHLIST, {
-        //variables: { userId: '66240ea7dd6bf32c45efaf54' }, // This is hardcoded for now I think... change it to signed-in user's number '66240ea7dd6bf32c45efaf54'.
-        variables: { userId: ("66240ea7dd6bf32c45efaf54")},
+        variables: { userId: localStorage.getItem('id')},
         // variables: { userId: localStorage.getItem(connect.sid)}, // ? Why not this? // id vs userId.?
         // Is it connect.sid ? That has value 's%3AS2TEI1YdWFAl-NXFufQrXxRT_n12oCeC.pa%2FaAikzDs5b%2BPOzsTRyC8jZEniS5mD3pc2ysg8tDGE'....
-
         onError: (error) => {
             setError(error.message);
         },
         onCompleted: (data) => {
+            if(data.wishList){
+                setIsEmpty(false);
             setData(data);
             setError(null);
         }
+    }
     });
+    
 
     return ( // Return loops, I believe, unless my computer lied to me....
         <div className="container">

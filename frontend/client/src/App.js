@@ -11,6 +11,7 @@ import WishList from "./views/wishListPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router";
 
+import RequireAuth from "./auth/requireAuth";
 
 
 
@@ -19,7 +20,7 @@ export default function App() {
     
     return (
         <>
-            <NavBar/>
+        <NavBar/>
                 <Routes>
                     <Route path="/" element={<HomePage/>}/>
                     <Route path = "/search" element={<SearchFeedPage/>}/>
@@ -27,8 +28,10 @@ export default function App() {
                     <Route path = "/login" element={<LoginPage/>}/>
                     <Route path = "/signup" element={<SignUpPage/>}/>
                     <Route path = "/createListing" element={<CreateListingPage/>}/>
-                    <Route path = "/profile" element={<ProfilePage/>}/>
-                    <Route path = "/wishlist" element={<WishList/>}/>
+                    <Route element={ <RequireAuth /> }>
+                        <Route path = "/profile" element={<ProfilePage/>}/>
+                        <Route path = "/wishlist" element={<WishList/>}/>
+                    </Route>
                 </Routes>
             <FooterBar/>
         </>

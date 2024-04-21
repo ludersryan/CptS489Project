@@ -12,22 +12,22 @@ const client = new ApolloClient({
 });
 
 
-client.query({
-  query: gql`
-    query {
-      wishList(userId: "66240ea7dd6bf32c45efaf54") {
-        id
-        name
-        brand
-        yearProduced
-        description
-        price
-        favorites
-        condition
-      }
-    }
-  `
-}).then(result => console.log(result));
+// client.query({
+//   query: gql`
+//     query {
+//       wishList(userId: "66240ea7dd6bf32c45efaf54") {
+//         id
+//         name
+//         brand
+//         yearProduced
+//         description
+//         price
+//         favorites
+//         condition
+//       }
+//     }
+//   `
+// }).then(result => console.log(result));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

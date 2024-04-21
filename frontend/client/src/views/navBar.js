@@ -9,6 +9,7 @@ import { useState } from 'react';
 export default function NavBar() {
 
 
+    // need to add something like useContext to check if a user is logged in throughout the nodes
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     
     const checkToken = () => {

@@ -5,8 +5,87 @@ import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Row, Col } from 'react-bootstrap';
 
+// // post queries
+// addPost: {
+//     type: PostType,
+//     args : {
+//         name: {type: new GraphQLNonNull(GraphQLString)},
+//         description: {type:GraphQLString},
+//         brand: {type: new GraphQLNonNull(GraphQLString)},
+//         yearProduced: {type: GraphQLString},
+//         price: {type: new GraphQLNonNull(GraphQLFloat)},
+//         favorites: {
+//             type: GraphQLInt,
+//             defaultValue: 0
+//         },
+//         condition: {
+//             type: new GraphQLEnumType({
+//                 name: 'PostCondition',
+//                 values :{
+//                     'Mint': {value: 'Mint'},
+//                     'Excellent': {value: 'Excellent'},
+//                     'Good': {value: 'Good'},
+//                     'Fair': {value: 'Fair'},
+//                     'Poor': {value: 'Poor'},
+//                     'Parts': {value: 'For parts or not working'},
+//                 }
+//             }),
+//             defaultValue: 'N/A',
+//         },
+//         userId: {type: new GraphQLNonNull(GraphQLID)},
+//     },
+//     resolve : addPostResolver,
+// },
+
+export const ADD_POST = gql`
+    mutation AddPost($name: String!, $brand: String!, $yearProduced: Date, $description: String, $favorites: Int, $price: Float, $condition: String, $userId: ID!) {
+        addPost(name: $name, brand: $brand, yearProduced: $yearProduced, description: $description, favorites: $favorites, price: $price, condition: $condition, userId: $userId){
+            id
+        }
+    }
+`;
+
 
 export default function CreateListingPage() {
+    const [error, setError] = useState();
+    const [data, setData] = useState();
+    const [mutate] = useMutation(ADD_POST, {
+        onError: (error) => {
+            setError(error.message);
+        }
+    });
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setData(null);
+        try{
+            const response = await mutate({
+                variables: {
+                    name: e.target.elements.formProductName.value,
+                    brand: e.target.elements.formBrand.value,
+                    yearProduced: e.target.elements.formYearProduced.value,
+                    description: e.target.elements.formDescription.value,
+                    favorites: e.target.elements.formFavorites.value,
+                    price: e.target.elements.formPrice.value,
+                    condition: e.target.elements.formCondition.value,
+                    userId: localStorage.getItem('id')
+                }
+            });
+            if(response.data.addPost){
+                setData(response.data);
+                setError(null);
+            }
+
+        } catch(err){
+            console.error('Mutation error:', err)
+        }
+    }
+
+    const resetForm = () => {
+        document.getElementById('createListingForm').reset();
+    }
+    
   return (
     <Container>
         <Row>
@@ -23,7 +102,6 @@ export default function CreateListingPage() {
                         <Form.Label>Brand</Form.Label>
                         <Form.Control type="text" placeholder="Enter brand" />
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formDescription">
                         <Form.Label>Description</Form.Label>
                         <Form.Control type="text" placeholder="Enter description" />

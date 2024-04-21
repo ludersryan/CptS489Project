@@ -50,7 +50,10 @@ export async function addPostResolver(parent, args, context){
             userId: user.id,
         });
         await newPost.save();
-        return newPost;
+        return {
+            name: newPost.name,
+            id: newPost._id,
+        }
     }
     catch(err){
         throw new Error(err.message);
