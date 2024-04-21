@@ -58,6 +58,14 @@ export default function ProfilePage() {
 
         </div>
 
+        <div className="toWishlist">
+
+            
+
+            <a href="/wishlist"><h2 className="large-text"><b>View My Wishlist</b></h2></a>
+
+        </div>
+
     </div>
     );
 }
