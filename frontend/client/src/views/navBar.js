@@ -66,28 +66,28 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mx-auto mb-2 mb-lg-0" id="global-lower-nav-list">
                         <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="/">GUITARS</a>
+                            <Link to = '/search'><a className="nav-link" aria-current="page" href="/">GUITARS</a> </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">DRUMS</a>
+                            <Link to = '/search'><a className="nav-link" href="/">DRUMS</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">PEDALS AND AMPLIFIERS</a>
+                            <Link to = '/search'><a className="nav-link" href="/">PEDALS AND AMPLIFIERS</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">KEYBOARDS</a>
+                        <Link to = '/search'><a className="nav-link" href="/">KEYBOARDS</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">RECORDING</a>
+                        <Link to = '/search'><a className="nav-link" href="/">RECORDING</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">DJ AND LIGHTING</a>
+                        <Link to = '/search'><a className="nav-link" href="/">DJ AND LIGHTING</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">ACCESSORIES</a>
+                        <Link to = '/search'><a className="nav-link" href="/">ACCESSORIES</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/">SOFTWARE</a>
+                        <Link to = '/search'><a className="nav-link" href="/">SOFTWARE</a></Link>
                         </li>
                     </ul>
                 </div>

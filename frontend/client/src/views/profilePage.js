@@ -1,71 +1,142 @@
-import '../css/profile-styles.css'
+import React, { useState, useContext, useEffect } from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import UserContext from '../auth/userContext';
+import '../css/profile-styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+export const GET_USER = gql`
+    query GetUser($id: ID!) {
+        user(id: $id) {
+            id
+            name
+            email
+            dateCreated
+            totalListings
+            itemsSold
+            itemsBought
+            avgRating
+            aboutMe
+        }
+    }
+`;
+
+export const UPDATE_USER = gql`
+    mutation UpdateUser($id: ID!, $name: String, $email: String, $aboutMe: String) {
+        updateUser(id: $id, name: $name, email: $email, aboutMe: $aboutMe) {
+            id
+            name
+            email
+            dateCreated
+            totalListings
+            itemsSold
+            itemsBought
+            avgRating
+            aboutMe
+        }
+    }
+`;
 
 export default function ProfilePage() {
+    const { user } = useContext(UserContext);
+    const [error, setError] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
+
+
+    
+    const { loading, data } = useQuery(GET_USER, {
+        variables: { id: user?.id },
+        onError: setError,
+        onCompleted: () => setError(null)
+    });
+
+    const [mutate] = useMutation(UPDATE_USER, {
+        onError: setError,
+        onCompleted: (data) => {
+            if (data.updateUser) {
+                console.log('User updated', data.updateUser);
+                setError(null);
+            }
+        }
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setShowAlert(false);
+        const { name, email, aboutMe } = e.target.elements;
+
+        try {
+            const response = await mutate({
+                variables: {
+                    id: user.id,
+                    name: name.value,
+                    email: email.value,
+                    aboutMe: aboutMe.value
+                }
+            });
+            if (response.data.updateUser) {
+                    setShowAlert(true);
+                    setTimeout(() => { setShowAlert(false) }, 5000);
+                }
+        } catch (err) {
+            console.error('Mutation error:', err);
+        }
+    };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    if (!data) return <p>No user data available.</p>;
+
+    const { user: userData } = data;
+
+
     return (
-        <div className="container">
+        <Container fluid>
+            <h1>Profile Page</h1>
+            <Form onSubmit={handleSubmit}>
+                <Row>
+                    <Col md={6}>
+                        <Form.Group controlId="formBasicName">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" defaultValue={userData.name} name="name" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" defaultValue={userData.email} name="email" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicAboutMe">
+                            <Form.Label>About Me</Form.Label>
+                            <Form.Control type="text" defaultValue={userData.aboutMe} name="aboutMe" />
+                        </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                        <Form.Group controlId="formBasicTotalListings">
+                            <Form.Label>Total Listings</Form.Label>
+                            <Form.Control type="text" defaultValue={userData.totalListings} readOnly />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicItemsSold">
+                            <Form.Label>Items Sold</Form.Label>
+                            <Form.Control type="text" defaultValue={userData.itemsSold} readOnly />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicItemsBought">
+                            <Form.Label>Items Bought</Form.Label>
+                            <Form.Control type="text" defaultValue={userData.itemsBought} readOnly />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicAvgRating">
+                            <Form.Label>Avg Rating</Form.Label>
+                            <Form.Control type="text" defaultValue={userData.avgRating} readOnly />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                    <Button variant="primary" type="submit" id="update-btn">
+                        Update Profile
+                    </Button>
 
-        <h1><b>User Profile</b></h1>
-        
-        <div className="profile-info">
-
-            <div className="profile-picture">
-
-                <img src="../images/profile-placeholder-pic.jpg" alt="Profile"/>
-
-            </div>
-
-            <div className="profile-details">
-                <h2 className="large-text">Wilbur Mudkip</h2>
-                <p className="small-text">Location: North Pole, AK</p>
-                <p className="small-text">Member Since: June 2019</p>
-                <p className="small-text">Last Active: 2 hours ago</p>
-                <button>Edit Profile</button>
-            </div>
-
-        </div>
-        
-        <div className="reviews">
-
-            <h2 className="large-text"><b>Recent Reviews</b></h2>
-
-            <div className="review-item">
-                <p className="small-text">From: Rebecca Lionheart</p>
-                <p className="small-text">Rating: 5 stars</p>
-                <p>Very friendly and handled my questions well! Instrument shipped fast, and was in proper, listed condition..</p>
-            </div>
-
-            <div className="review-item">
-                <p className="small-text">From: Gregory Felix</p>
-                <p className="small-text">Rating: 4 stars</p>
-                <p>D+Rep. I will certainly be buying from this good sir again. My drumkit, while slightly dusty, sounds great! </p>
-            </div>
-
-        </div>
-        
-        <div className="additional-info">
-            <h2 className="large-text"><b>Additional Information</b></h2>
-            <p><span className="field-name">Member Since:</span> June 2019</p>
-            <p><span className="field-name">Total Listings:</span> 20</p>
-            <p><span className="field-name">Items Sold:</span> 15</p>
-            <p><span className="field-name">Items Bought:</span> 10</p>
-            <p><span className="field-name">Average Rating:</span> 4.5 stars</p>
-            <p><span className="field-name">Payment Methods:</span> Visa, Mastercard, PayPal</p>
-            <p><span className="field-name">Shipping Preferences:</span> Priority Mail, FedEx</p>
-            <p><span className="field-name">Contact Information:</span> Wilbur.Mudkip@pokemon.com</p>
-            <p><span className="field-name">About Me:</span> The trade of musical instruments simply fills my heart with joy. Father of two. </p>
-
-        </div>
-
-        <div className="toWishlist">
-
-            
-
-            <a href="/wishlist"><h2 className="large-text"><b>View My Wishlist</b></h2></a>
-
-        </div>
-
-    </div>
+                    <Link to='/wishlist'><Button variant="secondary">View Wishlist</Button></Link>
+                    {showAlert && <div className="alert alert-success" role="alert">Profile updated successfully</div>}
+                </Form>
+        </Container>
     );
 }
+

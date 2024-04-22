@@ -2,7 +2,7 @@ import '../css/create-listing-styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form } from 'react-bootstrap';
 import { useContext, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import UserContext from '../auth/userContext';
@@ -16,16 +16,41 @@ export const ADD_POST = gql`
     }
 `;
 
+export const GET_USER_LISTING_COUNT = gql`
+    query user($id: ID!) {
+        user(id: $id){
+            totalListings
+        }
+    }
+`;
+
+export const UPDATE_USER_TOTAL_LISTINGS = gql`
+    mutation updateUser($id: ID!, $totalListings: Int!) {
+        updateUser(id: $id, totalListings: $totalListings){
+            id
+        }
+    }
+`;
+
+
+
+
 
 export default function CreateListingPage() {
     const [error, setError] = useState();
     const [data, setData] = useState();
+    const { user } = useContext(UserContext);
+    const userId = user ? user.id : null;
+
     const [mutate] = useMutation(ADD_POST, {
         onError: (error) => {
             setError(error.message);
         },
         onCompleted: (data) => {
             if(data.addPost){
+                const userListingCount = getUserListingData?.user?.totalListings ?? 0;
+                const updatedUserListingCount = userListingCount + 1;
+                updateUser({variables: {id: userId, totalListings: updatedUserListingCount}});
                 setData(data);
                 setError(null);
                 resetForm();
@@ -33,15 +58,37 @@ export default function CreateListingPage() {
         }
 
     });
+
+    const { data: getUserListingData, loading: getUserListingLoading, error:  getUserListingError } = useQuery(GET_USER_LISTING_COUNT, {
+        variables: {id: userId},
+        onError: (error) => {
+            setError(error.message);
+        }
+    });
+
+
+
+    
+    
+
+    const [updateUser] = useMutation(UPDATE_USER_TOTAL_LISTINGS, {
+        onError: (error) => {
+            setError(error.message);
+        }
+    });
+
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         setData(null);
-        
-        let dateProduced = new Date(e.target.elements.formYearProduced.value);
+        let ISO = null;
 
-        let ISO = dateProduced.toISOString();
+        if(e.target.elements.formYearProduced.value){
+            console.log(e.target.elements.formYearProduced.value);
+            let dateProduced = new Date(e.target.elements.formYearProduced.value);
+            ISO = dateProduced.toISOString();
+        }
 
         let values = {
             name: e.target.elements.formProductName.value,
@@ -66,12 +113,17 @@ export default function CreateListingPage() {
 
         } catch(err){
             console.error('Mutation error:', err)
+            setError(err.message);
         }
     }
 
     const resetForm = () => {
         document.getElementById('createListingForm').reset();
     }
+
+    if(getUserListingLoading) return <p>Loading...</p>;
+    if(getUserListingError) return <p>Error: {getUserListingError.message}</p>;
+    
     
   return (
     <Container>

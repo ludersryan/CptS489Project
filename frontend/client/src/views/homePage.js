@@ -2,6 +2,7 @@ import '../css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
+import {Container, Card} from 'react-bootstrap';
 
 export default function HomePage() {
   return (
@@ -27,49 +28,78 @@ export default function HomePage() {
                   </div>
               </div>
           </div>
-
-          <div className="container-fluid" id="global-featured-div">
+          <Container>
               <h2 style={{'fontWeight': 700}}>Popular Brands</h2>
-              <div className="card-group" id="brand-card-group">
-                  <div className="card">
-                      <div className="card-body">
-                          <h5 className="card-title">Gibson</h5>
-                      </div>
-                      <img className="card-img-bottom" src={require("../images/gibson.jpg")}  alt="Card gibson"/>
-                  </div>
-                  <div className="card">
-                      <div className="card-body">
-                          <h5 className="card-title">Fender</h5>
-                      </div>  
-                      <img className="card-img-bottom"src={require("../images/Fender.jpg")}  alt="Card fender"/>
-                  </div>
-                  <div className="card">
-                      
-                      <div className="card-body">
-                          <h5 className="card-title">Yamaha</h5>
-                      </div>
-                      <img className="card-img-bottom" src={require("../images/yamaha.jpg")} alt="Card yamaha"/>
-                  </div>
-                  <div className="card">
-                      <div className="card-body">
-                          <h5 className="card-title">Pearl</h5>
-                      </div>
-                      <img className="card-img-bottom" src={require("../images/pearl.jpg")} alt="Card pearl"/>
-                  </div>
-                  <div className="card">
-                      <div className="card-body">
-                          <h5 className="card-title">Martin</h5>
-                      </div>
-                      <img className="card-img-bottom" src={require("../images/martin.jpg")} alt="Card martin"/>
-                  </div>
-                  <div className="card">
-                      <div className="card-body">
-                          <h5 className="card-title">Stradivarius</h5>
-                      </div>
-                      <img className="card-img-bottom" src={require("../images/Stradivarius.jpg")}  alt="Cardstradivarius"/>
-                  </div>
-              </div>
-          </div>
+              <br></br>
+                    <Card>
+                        <Card.Header>Gibson</Card.Header>
+                        <Card.Body>
+                            <Card.Img src={require("../images/gibson.jpg")}  alt="Card gibson" style={{ height: '200px', objectFit: 'cover' }}/>
+                            <Card.Title>Gibson</Card.Title>
+                            <Card.Text style={{minHeight: '200px'}}>
+                                Gibson Brands, Inc. is an American manufacturer of guitars, other musical instruments, and professional audio equipment.
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header>Fender</Card.Header>
+                        <Card.Body>
+                            <Card.Img src={require("../images/Fender.jpg")}  alt="Card fender" style={{ height: '200px', objectFit: 'cover' }}/>
+                            <Card.Title>Fender</Card.Title>
+                            <Card.Text style={{minHeight: '200px'}}>
+                                Fender Musical Instruments Corporation is an American manufacturer of stringed instruments and amplifiers.
+                            </Card.Text>
+
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header>Yamaha</Card.Header>
+                        <Card.Body>
+                            <Card.Img src={require("../images/yamaha.jpg")}  alt="Card yamaha" style={{ height: '200px', objectFit: 'cover' }}/>
+                            <Card.Title>Yamaha</Card.Title>
+                            <Card.Text style={{minHeight: '200px'}}>
+                                Yamaha Corporation is a Japanese multinational corporation and conglomerate with a very wide range of products and services.
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header>Pearl</Card.Header>
+                        <Card.Body>
+                            <Card.Img src={require("../images/pearl.jpg")}  alt="Card pearl" style={{ height: '200px', objectFit: 'cover' }}/>
+                            <Card.Title>Pearl</Card.Title>
+                            <Card.Text style={{minHeight: '200px'}}>
+                                Pearl Musical Instrument Company, simply known as Pearl, is a multinational corporation based in Japan with a wide range of products, predominantly percussion instruments.
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Header>Martin</Card.Header>
+                        <Card.Body>
+                            <Card.Img src={require("../images/martin.jpg")}  alt="Card martin" style={{ height: '200px', objectFit: 'cover' }}/>
+                            <Card.Title>Martin</Card.Title>
+                            <Card.Text style={{minHeight: '200px'}}>
+
+                                C.F. Martin & Company is an American guitar manufacturer established in 1833.
+                            </Card.Text>
+                        </Card.Body>
+
+                    </Card>
+
+                    <Card>
+                        <Card.Header>Stradivarius</Card.Header>
+                        <Card.Body>
+                            <Card.Img src={require("../images/Stradivarius.jpg")}  alt="Card stradivarius" style={{ height: '200px', objectFit: 'cover' }}/>
+                            <Card.Title>Stradivarius</Card.Title>
+                            <Card.Text style={{minHeight: '200px'}}>
+                                Stradivarius is a stringed instrument brand that was established in 1994 as a part of the Inditex group. The brand offers the latest trends in clothing, shoes and
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+          </Container>
     </div>
   );
 }

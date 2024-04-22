@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     name: String,
-        totalListings: Number,
+    totalListings: Number,
     itemsSold: Number,
     itemsBought: Number,
     avgRating: Number,

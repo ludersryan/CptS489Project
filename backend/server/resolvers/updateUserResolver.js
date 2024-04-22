@@ -22,6 +22,7 @@ export default async function updateUserResolver(parent, args, context){
         else{
             return User.findByIdAndUpdate(user.id, {$set: updateUserFields}, {new: true});
         }
+        
     }
     catch(err){
         throw new Error(err.message);
