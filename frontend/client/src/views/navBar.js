@@ -10,6 +10,7 @@ import { useContext } from 'react';
 
 export default function NavBar() {
     const { user, logout } = useContext(UserContext);
+    
   return (
     <>
         <nav className="navbar navbar-expand-lg bg-body-tertiary" id="global-top-nav">
@@ -66,28 +67,28 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mx-auto mb-2 mb-lg-0" id="global-lower-nav-list">
                         <li className="nav-item">
-                            <Link to = '/search'><a className="nav-link" aria-current="page" href="/">GUITARS</a> </Link>
+                            <Link to = '/search' className="nav-link" aria-current="page"> GUITARS</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to = '/search'><a className="nav-link" href="/">DRUMS</a></Link>
+                            <Link to = '/search' className="nav-link" >DRUMS</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to = '/search'><a className="nav-link" href="/">PEDALS AND AMPLIFIERS</a></Link>
+                            <Link to = '/search' className="nav-link">PEDALS AND AMPLIFIERS</Link>
                         </li>
                         <li className="nav-item">
-                        <Link to = '/search'><a className="nav-link" href="/">KEYBOARDS</a></Link>
+                            <Link to = '/search' className="nav-link" >KEYBOARDS </Link>
                         </li>
                         <li className="nav-item">
-                        <Link to = '/search'><a className="nav-link" href="/">RECORDING</a></Link>
+                            <Link to = '/search' className="nav-link" >RECORDING</Link>
                         </li>
                         <li className="nav-item">
-                        <Link to = '/search'><a className="nav-link" href="/">DJ AND LIGHTING</a></Link>
+                            <Link to = '/search' className="nav-link">DJ AND LIGHTING</Link>
                         </li>
                         <li className="nav-item">
-                        <Link to = '/search'><a className="nav-link" href="/">ACCESSORIES</a></Link>
+                            <Link to = '/search' className="nav-link" >ACCESSORIES</Link>
                         </li>
                         <li className="nav-item">
-                        <Link to = '/search'><a className="nav-link" href="/">SOFTWARE</a></Link>
+                            <Link to = '/search' className="nav-link">SOFTWARE</Link>
                         </li>
                     </ul>
                 </div>

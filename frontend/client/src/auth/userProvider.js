@@ -3,9 +3,11 @@ import UserContext from './userContext';
 
 
 export const UserProvider = ({children}) => {
-    const [user, setUser] = useState({
-        token: localStorage.getItem('token'),
-        id: localStorage.getItem('id')
+
+    const [user, setUser] = useState(() => {
+        const token = localStorage.getItem('token');
+        const id = localStorage.getItem('id');
+        return (token && id) ? {token, id} : null;
     });
 
     const login = (token, id) => {
@@ -18,6 +20,7 @@ export const UserProvider = ({children}) => {
         localStorage.removeItem('token');
         localStorage.removeItem('id');
         setUser(null);
+        console.log('User logged out');
     }
 
     return (

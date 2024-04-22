@@ -47,6 +47,7 @@ export default function ProductListingPage() {
     const { id } = useParams();
     const { user } = useContext(UserContext);
     const userId = user ? user.id : null;
+    
 
     const [mutate] = useMutation(ADD_WISHLIST, {
         onError: (error) => {
