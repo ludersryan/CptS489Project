@@ -11,13 +11,13 @@ export const verifyToken = (token) => {
     if (!token) {
         throw new Error('No token provided');
     }
-    const bearerToken = token.split(' ')[1];
+    const bearerToken = token.split(' ')[1]; // split token from Bearer
     if(!bearerToken){
         throw new Error('Invalid token format');
     }
     try{
-        const authData = jwt.verify(bearerToken, public_key);
-        const user = User.findById(authData.id).exec();
+        const authData = jwt.verify(bearerToken, public_key); // verify JWT w/ public key
+        const user = User.findById(authData.id).exec();  // find the user in db by Id
         if (!user) {
             throw new Error('User not found');
         }
