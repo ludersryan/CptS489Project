@@ -5,7 +5,7 @@ import { verifyToken } from '../helpers/jwt.js';
 export default async function updateUserResolver(parent, args, context){
     try{
         const user = await verifyToken(context.req.headers['authorization']);
-
+        // check if each field is provided and then just add it to our updateUserFields object
         let updateUserFields = {};
         if (args.name !== undefined) updateUserFields.name = args.name;
         if (args.email !== undefined) updateUserFields.email = args.email;

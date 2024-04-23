@@ -7,14 +7,14 @@ export async function updatePostResolver(parent, args, context){
         console.log(context.req.headers['authorization']);
         const user = await verifyToken(context.req.headers['authorization']);
 
-        const post = await Post.findById(args.id);
+        const post = await Post.findById(args.id); // find post by its id
         if(!post){
             throw new Error('Post not found');
         }
         if(post.userId.toString() !== user.id){
             throw new Error('Unauthorized');
         }
-
+        // check if each field is provided and add it to our updatePostFields object
         let updatePostFields = {};
         if (args.name !== undefined) updatePostFields.name = args.name;
         if (args.description !== undefined) updatePostFields.description = args.description;
@@ -28,7 +28,7 @@ export async function updatePostResolver(parent, args, context){
             throw new Error('No fields to update');
         }
         else{
-            return Post.findByIdAndUpdate(args.id, {$set: updatePostFields}, {new: true});
+            return Post.findByIdAndUpdate(args.id, {$set: updatePostFields}, {new: true}); // update the post
         }
     }
     catch(err){
@@ -46,13 +46,13 @@ export async function addPostResolver(parent, args, context){
             throw new Error('Unauthorized');
         }
 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId); // find user by id
 
         if(!user){
             throw new Error('User not found');
         }
 
-        
+        // ckecking for required fields
         let newPostFields = {};
         if (!args.name || !args.brand || !args.price){
             throw new Error('Please provide name, brand, and price');
@@ -81,7 +81,7 @@ export async function addPostResolver(parent, args, context){
             yearProduced: args.yearProduced || '01/01/0001',
         };
 
-        const newPost = new Post(newPostFields);
+        const newPost = new Post(newPostFields); // create the new post
         await newPost.save();
         return newPost;
     }

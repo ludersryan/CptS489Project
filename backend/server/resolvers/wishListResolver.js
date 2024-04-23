@@ -40,11 +40,11 @@ export async function removeFromWishListResolver(parent, args, context){
         console.log(context.req.headers['authorization']);
         const user = await verifyToken(context.req.headers['authorization']);
         
-        const result = await WishList.deleteOne({ userId: user.id, postId: args.postId })
+        const result = await WishList.deleteOne({ userId: user.id, postId: args.postId }) // delete the post from the wishlist
         if(result.deletedCount === 0){
             throw new Error('WishList not found');
         }
-        return {
+        return { // return the deleted wishlist post id and the user's id
             userId: user.id,
             productId: args.postId,
         }
